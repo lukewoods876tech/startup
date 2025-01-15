@@ -33,8 +33,10 @@ Ever dreamed of being a zookeeper? The Virtual Zoo App lets you create, customiz
 ![Quizzes](quiz.PNG)
 ![Home](home.PNG)
 
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Homepage: Features a banner, animal search bar, and "Explore Zoo" button.
+Animal Browser: Displays animal cards in a grid with filters and a search option.
+Zoo Dashboard: Displays the user's current zoo layout with animal cards and options to remove or view more details.
+Profile Settings: Page for managing the user's account and preferences.
 
 ```mermaid
 sequenceDiagram
