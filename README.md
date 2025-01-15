@@ -26,7 +26,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ### Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Ever dreamed of being a zookeeper? The Virtual Zoo App lets you create, customize, and manage your own zoo. Add animals from a wide library, learn fascinating facts, and even share your zoo with friends. Built with education and entertainment in mind, the app is perfect for kids, families, and animal enthusiasts. Learn, play, and grow your dream zoo!
+
 
 ### Design
 
@@ -43,20 +44,24 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Explore a library of animals with detailed profiles.
+- Customize your own zoo layout with drag-and-drop sections.
+- Take interactive quizzes to test your animal knowledge.
+- Share your zoo and compete with friends.
+- Real-time updates for animal library additions and friend activity.
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML**: Structure for pages like the animal browser and zoo dashboard.
+- **CSS**: Responsive design and animations.
+- **React**: Componentized structure for animal cards, zoo layouts, quizzes, and more.
+- **Web Services**: Use the [Zoo Animal API](https://zoo-animal-api.herokuapp.com/ and custom backend endpoints.
+- **Authentication**: Secure login and registration with personalized experiences.
+- **Database**: Store user data, zoo layouts, and quiz results.
+- **WebSocket**: Real-time updates for new animals and friend activity.
+
 
 ## 🚀 AWS deliverable
 
