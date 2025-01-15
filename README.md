@@ -52,7 +52,7 @@ sequenceDiagram
 
 I am going to use the required technologies in the following ways.
 
-- **HTML**: Structure for pages like the animal browser and zoo dashboard.
+- **HTML**: Structure for pages like the animal browser, zoo dashboard, home, quizzes.
 - **CSS**: Responsive design and animations.
 - **React**: Componentized structure for animal cards, zoo layouts, quizzes, and more.
 - **Web Services**: Use the [Zoo Animal API](https://zoo-animal-api.herokuapp.com/ and custom backend endpoints.
