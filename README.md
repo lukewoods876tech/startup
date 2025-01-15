@@ -29,7 +29,7 @@ Ever dreamed of being a zookeeper? The Virtual Zoo App lets you create, customiz
 
 ### Design
 
-![Home](home.PNG)
+![Home](home.png)
 ![Design image](placeholder.png)
 ![Design image](placeholder.png)
 
