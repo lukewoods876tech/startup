@@ -42,11 +42,11 @@ sequenceDiagram
 
 ### Key features
 
-- Explore a library of animals with detailed profiles.
+- Explore a library of animals with detailed profiles (API for profiles).
 - Customize your own zoo layout with drag-and-drop sections.
-- Take interactive quizzes to test your animal knowledge.
+- Take interactive quizzes to test your animal knowledge (extra feature).
 - Share your zoo and compete with friends.
-- Real-time updates for animal library additions and friend activity.
+- Real-time updates for animal library additions and friend activity (mario added a lion to his zoo).
 
 ### Technologies
 
