@@ -34,9 +34,14 @@ Profile Settings: Page for managing the user's account and preferences.
 
 ```mermaid
 sequenceDiagram
-    actor You
-    actor Website
-    You->>Website: Replace this with your design
+    actor User1 as Zoo Keeper (User 1)
+    actor User2 as Zoo Visitor (User 2)
+    participant Server
+    User1->>Server: Add Lion to Zoo
+    Server-->>User1: Confirmation: Lion Added
+    Server-->>User2: Notification: Lion Added to Zoo
+    User2->>Server: Request Zoo Details
+    Server-->>User2: Send Updated Zoo Layout
 ```
 
 ### Key features
