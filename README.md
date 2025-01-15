@@ -57,7 +57,7 @@ I am going to use the required technologies in the following ways.
 - **React**: Componentized structure for animal cards, zoo layouts, quizzes, and more.
 - **Web Services**: Use the [Zoo Animal API](https://zoo-animal-api.herokuapp.com/ and custom backend endpoints.
 - **Authentication**: Secure login and registration with personalized experiences.
-- **Database**: Store user data, zoo layouts, and quiz results.
+- **Database**: Store user data, zoo layouts, animal information, and quiz results.
 - **WebSocket**: Real-time updates for new animals and friend activity.
 
 
