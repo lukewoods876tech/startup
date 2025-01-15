@@ -97,3 +97,4 @@ Handling the toggling of the checkboxes was particularly interesting.
   ))}
 </div>
 ```
+Here I plan on writing plenty of notes. My next subject to learn about is markdown
