@@ -20,6 +20,12 @@ I learned how to lease a domain name as well.
 
 No problems worked just like it said in the [instruction](https://github.com/webprogramming260/.github/blob/main/profile/webServers/https/https.md).
 
+HTTPS is crucial for secure web communication, ensuring data integrity and trust for users.
+Caddy simplifies enabling HTTPS with built-in support for Let's Encrypt's automated certificates.
+Using vi/vim to edit configuration files is a foundational skill for managing servers.
+Restarting services like Caddy applies configuration changes to keep the server updated.
+Verifying and troubleshooting server setups helps ensure proper operation and secure connections.
+
 ## HTML
 
 This was easy. I was careful to use the correct structural elements such as header, footer, main, nav, and form. The links between the three views work great using the `a` element.
