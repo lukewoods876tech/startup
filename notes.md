@@ -35,7 +35,7 @@ Verifying and troubleshooting server setups helps ensure proper operation and se
 Five things I learned:
 1. The Importance of HTTPS for Web Security
 2. Configuring HTTPS with Caddy and Let's Encrypt
-3.
+3. Editing and Managing Configuration Files (Caddyfile)
 4.
 5.
 >>>>>>> 867554c (Notes)
