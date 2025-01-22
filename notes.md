@@ -13,8 +13,13 @@
 My IP address is: 54.81.96.130
 Launching my AMI I initially put it on a private subnet. Even though it had a public IP address and the security group was right, I wasn't able to connect to it.
 
+<<<<<<< HEAD
 I learned a lot about AWS. I had to setup my server twice!
 I learned how to lease a domain name as well.
+=======
+I learned a lot about creating an AWS Server! I actually had to do it twice haha.
+I also was able to lease a domain name for my website.
+>>>>>>> e5f8f9a (notes)
 
 ## Caddy
 
