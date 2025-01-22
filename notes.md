@@ -25,11 +25,20 @@ I also was able to lease a domain name for my website.
 
 No problems worked just like it said in the [instruction](https://github.com/webprogramming260/.github/blob/main/profile/webServers/https/https.md).
 
+<<<<<<< HEAD
 HTTPS is crucial for secure web communication, ensuring data integrity and trust for users.
 Caddy simplifies enabling HTTPS with built-in support for Let's Encrypt's automated certificates.
 Using vi/vim to edit configuration files is a foundational skill for managing servers.
 Restarting services like Caddy applies configuration changes to keep the server updated.
 Verifying and troubleshooting server setups helps ensure proper operation and secure connections.
+=======
+Five things I learned:
+1. The Importance of HTTPS for Web Security
+2. Configuring HTTPS with Caddy and Let's Encrypt
+3.
+4.
+5.
+>>>>>>> 867554c (Notes)
 
 ## HTML
 
