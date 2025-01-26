@@ -1,6 +1,6 @@
 # CS 260 Notes
 
-[My startup - myzoo](https://simon.myzoo.click)
+[My startup - MyZoo](https://simon.myzoo.click)
 
 ## Helpful links
 
