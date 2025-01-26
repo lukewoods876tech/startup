@@ -42,7 +42,7 @@ Five things I learned:
 
 Working on the fork of the codepen was a fun and interactive assignment. I got to learn how to make updates to the html code and see the changes occur live. It was a smaller scale practice of editing html code and it provided me with a good learning opportunity. 
 
-This was easy. I was careful to use the correct structural elements such as header, footer, main, nav, and form. The links between the three views work great using the `a` element.
+I learned how to deploy the Simon code to a live website. I foudn this very interesting and I don't fully understand the deploy script so I would like to go back and learn how to do that better.
 
 The part I didn't like was the duplication of the header and footer code. This is messy, but it will get cleaned up when I get to React.
 
