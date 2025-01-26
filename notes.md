@@ -1,6 +1,6 @@
 # CS 260 Notes
 
-[My startup - MyZoo](https://simon.myzoo.click)
+[My startup - Simon](https://simon.cs260.click)
 
 ## Helpful links
 
@@ -13,32 +13,30 @@
 My IP address is: 54.81.96.130
 Launching my AMI I initially put it on a private subnet. Even though it had a public IP address and the security group was right, I wasn't able to connect to it.
 
-<<<<<<< HEAD
 I learned a lot about AWS. I had to setup my server twice!
 I learned how to lease a domain name as well.
-=======
+
 I learned a lot about creating an AWS Server! I actually had to do it twice haha.
 I also was able to lease a domain name for my website.
->>>>>>> e5f8f9a (notes)
+git add notes.md
 
 ## Caddy
 
 No problems worked just like it said in the [instruction](https://github.com/webprogramming260/.github/blob/main/profile/webServers/https/https.md).
 
-<<<<<<< HEAD
 HTTPS is crucial for secure web communication, ensuring data integrity and trust for users.
 Caddy simplifies enabling HTTPS with built-in support for Let's Encrypt's automated certificates.
 Using vi/vim to edit configuration files is a foundational skill for managing servers.
 Restarting services like Caddy applies configuration changes to keep the server updated.
 Verifying and troubleshooting server setups helps ensure proper operation and secure connections.
-=======
+
 Five things I learned:
 1. The Importance of HTTPS for Web Security
 2. Configuring HTTPS with Caddy and Let's Encrypt
-3. Editing and Managing Configuration Files (Caddyfile)
-4.
-5.
->>>>>>> 867554c (Notes)
+3. I learned perseverance and the importance of asking for help when you need it
+4. When you get frustrated take a deep breath and get up for a few minutes
+5. I learned that learning is fun and that computers are complex but there is always a way to victory
+
 
 ## HTML
 
