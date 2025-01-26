@@ -44,6 +44,8 @@ Working on the fork of the codepen was a fun and interactive assignment. I got t
 
 I learned how to deploy the Simon code to a live website. I foudn this very interesting and I don't fully understand the deploy script so I would like to go back and learn how to do that better.
 
+Through the process of building out the HTML structure for MyZoo.click, I gained a much deeper understanding of creating well-organized and semantic web pages. I learned how to properly structure a site using essential HTML elements like <header>, <nav>, <main>, and <footer> to improve accessibility and readability. Adding navigation links across multiple pages taught me the importance of ensuring seamless connectivity within a website. I also explored how to integrate placeholders for future features, like database content, WebSocket updates, and 3rd-party APIs, which showed me how to plan for scalability and interactivity. Including images and textual content allowed me to balance visual design with meaningful information, while creating a login placeholder reinforced the need for user-centric design. Overall, this exercise helped me see the importance of thoughtful HTML structure in laying the foundation for a functional, interactive, and user-friendly website.
+
 The part I didn't like was the duplication of the header and footer code. This is messy, but it will get cleaned up when I get to React.
 
 ## CSS
