@@ -35,7 +35,7 @@ Five things I learned:
 2. Configuring HTTPS with Caddy and Let's Encrypt
 3. I learned perseverance and the importance of asking for help when you need it
 4. When you get frustrated take a deep breath and get up for a few minutes
-5. I learned that learning is fun and that computers are complex but there is always a way to victory
+5. I learned that learning is fun and that computers are complex but there is  always a way to victory
 
 
 ## HTML
