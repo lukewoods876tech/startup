@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Animals - MyZoo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>View Animals</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="manage.html">Manage Zoo</a></li>
+          <li><a href="animals.html">View Animals</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </nav>
+      <hr />
+    </header>
+
+    <main>
+      <h2>Animals in Your Zoo</h2>
+      <p>Here’s a list of all the animals currently in your zoo. Click on any animal for more details!</p>
+
+      <!-- Table to display the animals -->
+      <table>
+        <caption>List of Animals in MyZoo</caption>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Species</th>
+            <th>Age</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="animalList">
+          <!-- Example rows -->
+          <tr>
+            <td>Leo</td>
+            <td>Lion</td>
+            <td>5</td>
+            <td><button onclick="viewDetails('Leo')">View Details</button></td>
+          </tr>
+          <tr>
+            <td>Daisy</td>
+            <td>Elephant</td>
+            <td>12</td>
+            <td><button onclick="viewDetails('Daisy')">View Details</button></td>
+          </tr>
+          <tr>
+            <td>Zippy</td>
+            <td>Giraffe</td>
+            <td>8</td>
+            <td><button onclick="viewDetails('Zippy')">View Details</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+
+    <footer>
+      <hr />
+      <p>&copy; 2025 MyZoo Inc. All rights reserved.</p>
+    </footer>
+
+    <script>
+      // Placeholder function for "View Details" action
+      function viewDetails(animalName) {
+        alert(`Details for ${animalName}: (placeholder for modal or new page).`);
+      }
+    </script>
+  </body>
+</html>
