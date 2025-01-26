@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-# MyZoo
-=======
 My Zoo
 
->>>>>>> 681c296 (Readme Update)
 [My Notes](notes.md)
 
 Imagine creating your own dream zoo from anywhere in the world! With the Virtual Zoo App, you can explore a wide variety of animals, add them to your personalized zoo, and learn fascinating facts about each species. Perfect for animal lovers, educators, and kids, this app brings the magic of the animal kingdom to your fingertips.
