@@ -78,15 +78,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **HTML pages** - I completed this part by creating the required pages: index.html, manage.html, animals.html, about.html, and login.html.
+- [x] **Proper HTML element usage** - I ensured proper use of semantic HTML tags such as <body>, <nav>, <main>, <header>, and <footer> across all pages.
+- [x] **Links** - All pages include a navigation bar with links to other pages for easy access.
+- [x] **Text** - I added clear, descriptive textual content to each page, explaining its purpose and functionality.
+- [x] **3rd party API placeholder** -  I added a placeholder for a 3rd-party API to fetch random animal facts.
+- [x] **Images** - Included an image on the Home page and placeholders for animal images in the View Animals page.
+- [x] **Login placeholder** - Created a login page with a form for username/password and placeholder functionality for username display.
+- [x] **DB data placeholder** - Added a table in the View Animals page to display animal data as a database placeholder.
+- [x] **WebSocket placeholder** - Added a placeholder for real-time updates on the Manage Zoo page, along with a sample WebSocket implementation.
 
 ## 🚀 CSS deliverable
 
