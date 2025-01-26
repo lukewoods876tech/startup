@@ -26,9 +26,9 @@ Ever dreamed of being a zookeeper? The Virtual Zoo App lets you create, customiz
 
 ### Design
 
-![Animal Browser](animalbrowser.PNG)
-![Quizzes](quiz.PNG)
-![Home](home.PNG)
+![Animal Browser](images/animalbrowser.PNG)
+![Quizzes](images/quiz.PNG)
+![Home](images/home.PNG)
 
 Homepage: Features a banner, animal search bar, and "Explore Zoo" button.
 Animal Browser: Displays animal cards in a grid with filters and a search option.
