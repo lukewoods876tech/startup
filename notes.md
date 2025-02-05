@@ -50,7 +50,22 @@ The part I didn't like was the duplication of the header and footer code. This i
 
 ## CSS
 
-This took a couple hours to get it how I wanted. It was important to make it responsive and Bootstrap helped with that. It looks great on all kinds of screen sizes.
+I implemented a comprehensive CSS structure for my MyZoo project using a modular approach. I created separate CSS files for each page while maintaining consistency through a shared base.css file. This helped me learn about:
+
+1. CSS Variables: Used root variables for colors and common values, making it easy to maintain a consistent theme
+2. Modular CSS: Created separate stylesheets for each page while using @import to share common styles
+3. Flexbox Layout: Implemented responsive layouts using flex containers for the header, main content, and footer
+4. Mobile-First Design: Ensured the site works well on all screen sizes
+5. Form Styling: Created consistent, user-friendly forms across login and management pages
+6. Table Design: Built clean, readable tables for displaying animal data
+
+The most challenging part was balancing consistency across pages while giving each its unique style. I learned that organizing CSS into modular files makes the code more maintainable and easier to debug.
+
+Key takeaways:
+- CSS variables are powerful for maintaining consistent themes
+- Modular CSS files help organize styles logically
+- Flexbox is essential for responsive layouts
+- Mobile-first design saves time in the long run
 
 Bootstrap seems a bit like magic. It styles things nicely, but is very opinionated. You either do, or you do not. There doesn't seem to be much in between.
 
