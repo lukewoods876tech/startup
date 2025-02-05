@@ -1,0 +1,19 @@
+@import 'base.css';
+
+.hero-section {
+  text-align: center;
+  padding: 2rem;
+}
+
+.hero-section h2 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.hero-section img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 2rem 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+} 
