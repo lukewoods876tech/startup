@@ -92,12 +92,16 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **Header, footer, and main content body** - I did not complete this part of the deliverable.
-- [x] **Navigation elements** - I did not complete this part of the deliverable.
-- [x] **Responsive to window resizing** - I did not complete this part of the deliverable.
-- [x] **Application elements** - I did not complete this part of the deliverable.
-- [x] **Application text content** - I did not complete this part of the deliverable.
-- [x] **Application images** - I did not complete this part of the deliverable.
+- [x] **Header, footer, and main content body** - Created a consistent layout across all pages using flexbox and CSS variables for styling.
+- [x] **Navigation elements** - Navigation menu with hover effects and responsive design that works on both desktop and mobile.
+- [x] **Responsive to window resizing** - Used flexbox and responsive units to ensure the site looks good on all screen sizes.
+- [x] **Application elements** - Styled forms, tables, and buttons with a consistent green theme and modern look.
+- [x] **Application text content** - Used consistent fonts, sizes, and colors across all pages.
+- [x] **Application images** - Added rounded corners and shadow effects to images for visual appeal.
+- [x] **Modular CSS** - Implemented a base.css file for shared styles and separate CSS files for each page's specific styling needs.
+- [x] **Color scheme** - Used CSS variables to maintain a consistent green color scheme throughout the application.
+- [x] **Animations** - Added hover effects on navigation links and buttons for better interactivity.
+- [x] **Forms and tables** - Styled forms with consistent spacing and modern input fields. Tables have alternating row colors and hover effects.
 
 ## 🚀 React part 1: Routing deliverable
 
