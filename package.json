@@ -1,8 +1,18 @@
 {
+  "name": "myzoo",
+  "version": "1.0.0",
+  "description": "A virtual zoo management application",
+  "main": "index.js",
   "scripts": {
-    "start": "live-server"
+    "start": "live-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": ["zoo", "virtual", "animals"],
+  "author": "Luke Woods",
+  "license": "ISC",
   "dependencies": {
     "live-server": "^1.2.2"
+  },
+  "devDependencies": {
   }
 } 
