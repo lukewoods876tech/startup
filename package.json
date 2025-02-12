@@ -1,18 +1,24 @@
 {
-  "name": "myzoo",
+  "name": "simon-react-p1",
   "version": "1.0.0",
-  "description": "A virtual zoo management application",
-  "main": "index.js",
+  "description": "Simon game in React",
   "scripts": {
-    "start": "live-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": ["zoo", "virtual", "animals"],
   "author": "Luke Woods",
   "license": "ISC",
   "dependencies": {
-    "live-server": "^1.2.2"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.0"
   },
   "devDependencies": {
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.1.0"
   }
 } 
