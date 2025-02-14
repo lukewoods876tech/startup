@@ -78,6 +78,40 @@ This was a lot of fun to see it all come together. I had to keep remembering to 
 
 Handling the toggling of the checkboxes was particularly interesting.
 
+## React Router Implementation Notes
+
+1. **Project Setup**
+   - Used Vite for project bundling and development
+   - Configured vite.config.js with React plugin
+   - Set up development server on port 3000
+
+2. **Component Structure**
+   - Created modular components for each major feature
+   - Implemented shared components (Navigation, Footer)
+   - Used CSS modules for component-specific styling
+
+3. **Routing Implementation**
+   - Wrapped app with BrowserRouter
+   - Set up Routes and Route components in App.jsx
+   - Implemented client-side navigation using Link components
+   - Protected routes based on authentication state
+
+4. **State Management**
+   - Used localStorage for persistent login state
+   - Implemented useEffect for checking authentication
+   - Created state management for user sessions
+
+5. **Navigation Flow**
+   - Home page as default route
+   - Login required for manage/animals pages
+   - Proper redirection after login/logout
+   - Consistent navigation across all pages
+
+6. **File Organization**
+   - Organized components by feature
+   - Created public directory for static assets
+   - Maintained consistent file structure
+
 ```jsx
 <div className="input-group sound-button-container">
   {calmSoundTypes.map((sound, index) => (

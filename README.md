@@ -107,9 +107,23 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Bundled using Vite** - I did not complete this part of the deliverable.
-- [ ] **Components** - I did not complete this part of the deliverable.
-- [ ] **Router** - Routing between login and voting components.
+- [x] **Bundled using Vite** - Set up the project using Vite for efficient development and bundling. Created vite.config.js with React plugin and development server configuration.
+
+- [x] **Components** - Created several React components:
+  - Navigation.jsx - Handles the navigation bar and login state
+  - Home.jsx - Displays the welcome page and zoo entrance
+  - About.jsx - Shows information about the application
+  - Animals.jsx - Displays the list of animals in a table
+  - Login.jsx - Handles user authentication
+  - Manage.jsx - Provides interface for adding/removing animals
+  - Footer.jsx - Displays the footer across all pages
+
+- [x] **Router** - Implemented React Router for client-side routing:
+  - Set up BrowserRouter in index.jsx
+  - Created routes in App.jsx for all pages (/home, /about, /animals, /manage, /login)
+  - Used Link components in Navigation for smooth client-side navigation
+  - Protected routes based on login state
+  - Implemented proper navigation after login/logout
 
 ## 🚀 React part 2: Reactivity
 
