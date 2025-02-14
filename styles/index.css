@@ -1,6 +1,18 @@
 @import 'base.css';
 
+main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+}
+
 .hero-section {
+  flex: 1;
+  min-width: 300px;
+  max-width: 600px;
   text-align: center;
   padding: 2rem;
 }
@@ -16,4 +28,81 @@
   border-radius: 8px;
   margin: 2rem 0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-section {
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+}
+
+.login-section form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.login-section h2 {
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.login-section label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.login-section input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.login-section button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.login-section button:hover {
+  background-color: var(--secondary-color);
+}
+
+.protected-link {
+    transition: opacity 0.3s ease;
+}
+
+.welcome-message {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.welcome-message h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.logout-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background-color: var(--secondary-color);
 } 

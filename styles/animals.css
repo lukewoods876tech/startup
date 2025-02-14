@@ -12,6 +12,7 @@ th, td {
   padding: 1rem;
   text-align: left;
   border-bottom: 1px solid #ddd;
+  vertical-align: middle;
 }
 
 th {
@@ -34,4 +35,12 @@ button {
 
 button:hover {
   background-color: var(--secondary-color);
+}
+
+.animal-thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 } 
