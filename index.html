@@ -4,47 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MyZoo - A Virtual Zoo</title>
-    <link rel="stylesheet" href="styles/base.css" />
-    <link rel="stylesheet" href="styles/index.css" />
   </head>
   <body>
-    <header>
-      <h1>Welcome to MyZoo, your virtual zoo!</h1>
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="manage.html">Manage Zoo</a></li>
-          <li><a href="animals.html">View Animals</a></li>
-          <li><a href="about.html">About</a></li>
-        </ul>
-      </nav>
-    </header>
-    <main>
-      <section class="hero-section">
-        <h2>Your Virtual Zoo</h2>
-        <p>Manage your zoo, add animals, and keep track of your zoo's progress!</p>
-        <img src="images/zooentrance.webp" alt="Zoo Entrance" width="300"/>
-      </section>
-
-      <section class="login-section">
-        <form>
-          <h2>Login to Get Started</h2>
-          <label for="username">Username:</label>
-          <input type="text" id="username" required />
-          <label for="password">Password:</label>
-          <input type="password" id="password" required />
-          <button type="submit">Login</button>
-        </form>
-      </section>
-    </main>
-    <footer>
-        <hr />
-        <p>&copy; 2025 MyZoo Inc. All rights reserved.</p>
-        <p>Author: Luke Woods</p>
-        <p>
-          <a href="https://github.com/lukewoods876tech/startup" target="_blank">View this project on GitHub</a>
-        </p>
-      <p>&copy; 2025 MyZoo Inc.</p>
-    </footer>
+    <div id="root"></div>
+    <script type="module" src="/index.jsx"></script>
   </body>
 </html>
