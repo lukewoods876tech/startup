@@ -74,9 +74,46 @@ Setting up Vite and React was pretty simple. I had a bit of trouble because of c
 
 ## React Part 2: Reactivity
 
-This was a lot of fun to see it all come together. I had to keep remembering to use React state instead of just manipulating the DOM directly.
+Working with React's reactivity features was a significant learning experience. Here are my key takeaways:
 
-Handling the toggling of the checkboxes was particularly interesting.
+1. **State Management**
+   - Learned to use useState for managing component-level state
+   - Implemented useContext for global state management (ZooContext)
+   - Discovered the importance of immutable state updates
+   - Managed complex state for animal lists and user authentication
+
+2. **Component Communication**
+   - Used props for parent-child data flow
+   - Implemented context for sharing state across components
+   - Created custom events for specific interactions
+   - Learned about lifting state up when needed
+
+3. **Local Storage Integration**
+   - Implemented persistent storage for user preferences
+   - Stored zoo layouts and animal data
+   - Managed authentication state across page refreshes
+   - Learned to sync state with localStorage using useEffect
+
+4. **Form Handling**
+   - Created controlled components for form inputs
+   - Implemented image preview functionality
+   - Managed form submission and validation
+   - Learned about React's synthetic events
+
+5. **Custom Hooks**
+   - Created reusable logic with custom hooks
+   - Implemented hooks for animal data management
+   - Built authentication hooks for login/logout
+   - Learned about hook composition and rules
+
+The most challenging part was managing state across components while keeping the code organized and maintainable. The ZooContext implementation helped solve this by providing a central state management solution.
+
+Key lessons:
+- Always use state for values that change over time
+- Keep components focused and single-responsibility
+- Use appropriate hooks for different use cases
+- Consider performance implications of state updates
+- Implement proper error handling and loading states
 
 ## React Router Implementation Notes
 
