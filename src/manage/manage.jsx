@@ -1,65 +1,112 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { ZooContext } from '../context/ZooContext'
 import './manage.css'
 
 function Manage() {
-  const [imagePreview, setImagePreview] = useState(null)
+  const { addAnimal } = useContext(ZooContext)
+  const [newAnimal, setNewAnimal] = useState({
+    name: '',
+    species: '',
+    age: '',
+    imageUrl: ''
+  })
+  const [previewImage, setPreviewImage] = useState(null)
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setNewAnimal(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
 
   const handleImageChange = (e) => {
     const file = e.target.files[0]
     if (file) {
       const reader = new FileReader()
-      reader.onload = (e) => setImagePreview(e.target.result)
+      reader.onloadend = () => {
+        setPreviewImage(reader.result)
+        setNewAnimal(prev => ({
+          ...prev,
+          imageUrl: reader.result
+        }))
+      }
       reader.readAsDataURL(file)
     }
   }
 
-  const handleAddAnimal = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    // Add animal logic here
-  }
-
-  const handleRemoveAnimal = (e) => {
-    e.preventDefault()
-    // Remove animal logic here
+    addAnimal(newAnimal)
+    // Reset form
+    setNewAnimal({
+      name: '',
+      species: '',
+      age: '',
+      imageUrl: ''
+    })
+    setPreviewImage(null)
   }
 
   return (
     <main>
-      <h2>Add a New Animal</h2>
-      <form onSubmit={handleAddAnimal}>
-        <label htmlFor="name">Name:</label>
-        <input type="text" id="name" required />
-        <label htmlFor="species">Species:</label>
-        <input type="text" id="species" required />
-        <label htmlFor="age">Age:</label>
-        <input type="number" id="age" required />
-        <label htmlFor="animal-image">Animal Image:</label>
-        <input 
-          type="file" 
-          id="animal-image" 
-          accept="image/*" 
-          required 
-          className="file-input"
-          onChange={handleImageChange}
-        />
-        <div className="image-preview-container">
-          {imagePreview && (
-            <img 
-              id="image-preview" 
-              src={imagePreview} 
-              alt="Image preview" 
-              style={{ display: 'block' }}
-            />
-          )}
+      <h2>Add New Animal</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="name">Animal Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={newAnimal.name}
+            onChange={handleInputChange}
+            required
+          />
         </div>
-        <button type="submit">Add Animal</button>
-      </form>
 
-      <h2>Remove an Animal</h2>
-      <form onSubmit={handleRemoveAnimal}>
-        <label htmlFor="remove-name">Animal Name:</label>
-        <input type="text" id="remove-name" required />
-        <button type="submit">Remove Animal</button>
+        <div className="form-group">
+          <label htmlFor="species">Species:</label>
+          <input
+            type="text"
+            id="species"
+            name="species"
+            value={newAnimal.species}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="age">Age:</label>
+          <input
+            type="number"
+            id="age"
+            name="age"
+            value={newAnimal.age}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="image">Animal Image:</label>
+          <input
+            type="file"
+            id="image"
+            name="image"
+            onChange={handleImageChange}
+            accept="image/*"
+            className="file-input"
+          />
+        </div>
+
+        {previewImage && (
+          <div className="image-preview-container">
+            <img src={previewImage} alt="Preview" />
+          </div>
+        )}
+
+        <button type="submit">Add Animal</button>
       </form>
     </main>
   )

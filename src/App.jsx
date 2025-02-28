@@ -6,10 +6,11 @@ import Manage from './manage/manage'
 import Animals from './animals/animals'
 import About from './about/about'
 import Login from './login/login'
+import { ZooProvider } from './context/ZooContext'
 
 function App() {
   return (
-    <>
+    <ZooProvider>
       <Navigation />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -19,7 +20,7 @@ function App() {
         <Route path="/login" element={<Login />} />
       </Routes>
       <Footer />
-    </>
+    </ZooProvider>
   )
 }
 
