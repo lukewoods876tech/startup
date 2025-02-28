@@ -169,3 +169,38 @@ Key lessons:
 </div>
 ```
 Here I plan on writing plenty of notes. My next subject to learn about is markdown
+
+```jsx
+function Animals() {
+  const { animals } = useContext(ZooContext)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [filterType, setFilterType] = useState('all')
+
+  const filteredAnimals = animals.filter(animal => {
+    const matchesSearch = animal.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         animal.species.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesType = filterType === 'all' || animal.type === filterType
+    return matchesSearch && matchesType
+  })
+
+  return (
+    <main>
+      <div className="filters">
+        <input 
+          type="text" 
+          placeholder="Search animals..." 
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <select value={filterType} onChange={(e) => setFilterType(e.target.value)}>
+          <option value="all">All Animals</option>
+          <option value="mammal">Mammals</option>
+          <option value="bird">Birds</option>
+          <option value="reptile">Reptiles</option>
+        </select>
+      </div>
+      {/* Rest of your table code using filteredAnimals instead of animals */}
+    </main>
+  )
+}
+```

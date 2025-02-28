@@ -8,6 +8,7 @@ function Manage() {
     name: '',
     species: '',
     age: '',
+    weight: '',
     imageUrl: ''
   })
   const [previewImage, setPreviewImage] = useState(null)
@@ -43,6 +44,7 @@ function Manage() {
       name: '',
       species: '',
       age: '',
+      weight: '',
       imageUrl: ''
     })
     setPreviewImage(null)
@@ -85,6 +87,20 @@ function Manage() {
             value={newAnimal.age}
             onChange={handleInputChange}
             required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="weight">Weight (lbs):</label>
+          <input
+            type="number"
+            id="weight"
+            name="weight"
+            value={newAnimal.weight}
+            onChange={handleInputChange}
+            required
+            min="0"
+            step="0.1"
           />
         </div>
 
