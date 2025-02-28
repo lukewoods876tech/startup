@@ -3,7 +3,7 @@ import { ZooContext } from '../context/ZooContext'
 import './animals.css'
 
 function Animals() {
-  const { animals, removeAnimal } = useContext(ZooContext)
+  const { animals, removeAnimal, updateAnimal } = useContext(ZooContext)
   const [searchTerm, setSearchTerm] = useState('')
   const [filterType, setFilterType] = useState('all')
 
@@ -13,6 +13,11 @@ function Animals() {
     const matchesType = filterType === 'all' || animal.type === filterType
     return matchesSearch && matchesType
   })
+
+  const handleFeed = (animal) => {
+    const newWeight = parseFloat(animal.weight) + 1
+    updateAnimal(animal.id, { weight: newWeight.toString() })
+  }
 
   return (
     <main>
@@ -50,10 +55,16 @@ function Animals() {
                 <p className="weight">Weight: {animal.weight} lbs</p>
               </div>
               <button 
+                onClick={() => handleFeed(animal)}
+                className="feed-button"
+              >
+                Feed Animal
+              </button>
+              <button 
                 onClick={() => removeAnimal(animal.id)}
                 className="remove-button"
               >
-                Remove from Zoo
+                Euthanize Animal
               </button>
             </div>
           </div>

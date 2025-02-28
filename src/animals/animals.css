@@ -72,6 +72,22 @@
   border-bottom: 1px solid #eee;
 }
 
+.feed-button {
+  width: 100%;
+  padding: 8px;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 8px;
+}
+
+.feed-button:hover {
+  background-color: #27ae60;
+}
+
 .remove-button {
   width: 100%;
   padding: 8px;
@@ -81,6 +97,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 4px;
 }
 
 .remove-button:hover {

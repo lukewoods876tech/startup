@@ -26,8 +26,14 @@ export function ZooProvider({ children }) {
     setAnimals(prevAnimals => prevAnimals.filter(animal => animal.id !== animalId))
   }
 
+  const updateAnimal = (animalId, updates) => {
+    setAnimals(prevAnimals => prevAnimals.map(animal => 
+      animal.id === animalId ? { ...animal, ...updates } : animal
+    ))
+  }
+
   return (
-    <ZooContext.Provider value={{ animals, addAnimal, removeAnimal }}>
+    <ZooContext.Provider value={{ animals, addAnimal, removeAnimal, updateAnimal }}>
       {children}
     </ZooContext.Provider>
   )
