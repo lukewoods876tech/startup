@@ -125,35 +125,21 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
   - Protected routes based on login state
   - Implemented proper navigation after login/logout
 
-## 🚀 React part 2: Reactivity
+## 🚀 React part 2: Reactivity deliverable
 
-For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
+For this deliverable I did the following:
 
-- [x] **All functionality implemented or mocked out** - Implemented core functionality including:
-  - Animal browsing and searching
-  - Zoo management (add/remove animals)
-  - User authentication simulation
-  - Animal quiz feature with scoring
-  - Real-time updates mocked with temporary state
-
-- [x] **Hooks** - Utilized various React hooks throughout the application:
-  - useState for managing animal lists, user data, and quiz states
-  - useEffect for fetching mock animal data and handling side effects
-  - useContext for managing global state (user authentication)
-  - useNavigate for programmatic navigation after actions
-  - Custom hooks for reusable logic (useAnimalData, useQuiz)
-
-- [x] **Local Storage** - Implemented persistent storage for:
-  - User preferences and settings
-  - Saved zoo layouts
-  - Quiz scores and progress
-  - Recently viewed animals
-
-- [x] **Component communication** - Components interact through:
-  - Props for parent-child communication
-  - Context for global state management
-  - Custom events for specific interactions
-  - Lifting state up when needed
+- [x] **Component state** - Added state management for animal weights and feeding functionality
+- [x] **Component communication** - Implemented:
+  - Context (ZooContext) for managing animal data
+  - Props for component configuration
+  - Event handlers for user interactions
+- [x] **Lifecycle management** - Used useEffect to persist animal data in localStorage
+- [x] **User interaction** - Added:
+  - Feed button that increases animal weight
+  - Euthanize button for removing animals
+  - Search and filter functionality for animals
+- [x] **Application is responsive** - All components maintain functionality across screen sizes
 
 ## 🚀 Service deliverable
 

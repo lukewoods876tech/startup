@@ -72,48 +72,40 @@ Key takeaways:
 
 Setting up Vite and React was pretty simple. I had a bit of trouble because of conflicting CSS. This isn't as straight forward as you would find with Svelte or Vue, but I made it work in the end. If there was a ton of CSS it would be a real problem. It sure was nice to have the code structured in a more usable way.
 
-## React Part 2: Reactivity
+## React Part 2: Advanced Features
 
-Working with React's reactivity features was a significant learning experience. Here are my key takeaways:
+I implemented several new features in my zoo application:
 
-1. **State Management**
-   - Learned to use useState for managing component-level state
-   - Implemented useContext for global state management (ZooContext)
-   - Discovered the importance of immutable state updates
-   - Managed complex state for animal lists and user authentication
+1. **Animal Management System**
+   - Added weight tracking for each animal
+   - Implemented feeding mechanism that increases animal weight
+   - Created euthanization functionality for removing animals
+   - Built a responsive card-based display system
 
-2. **Component Communication**
-   - Used props for parent-child data flow
-   - Implemented context for sharing state across components
-   - Created custom events for specific interactions
-   - Learned about lifting state up when needed
+2. **State Management Learnings**
+   - Used React Context (ZooContext) for global state management
+   - Implemented localStorage persistence for animal data
+   - Learned about state immutability and proper update patterns
+   - Managed complex state with multiple user interactions
 
-3. **Local Storage Integration**
-   - Implemented persistent storage for user preferences
-   - Stored zoo layouts and animal data
-   - Managed authentication state across page refreshes
-   - Learned to sync state with localStorage using useEffect
+3. **Component Communication**
+   - Used context providers for sharing data
+   - Implemented event handlers for user interactions
+   - Created reusable components with props
+   - Learned about component lifecycle with useEffect
 
-4. **Form Handling**
-   - Created controlled components for form inputs
-   - Implemented image preview functionality
-   - Managed form submission and validation
-   - Learned about React's synthetic events
+4. **Key Technical Learnings**
+   - State updates must be immutable
+   - Context provides clean solution for global state
+   - localStorage requires JSON serialization
+   - React's useState and useEffect are powerful tools
+   - Component reusability improves code maintenance
 
-5. **Custom Hooks**
-   - Created reusable logic with custom hooks
-   - Implemented hooks for animal data management
-   - Built authentication hooks for login/logout
-   - Learned about hook composition and rules
-
-The most challenging part was managing state across components while keeping the code organized and maintainable. The ZooContext implementation helped solve this by providing a central state management solution.
-
-Key lessons:
-- Always use state for values that change over time
-- Keep components focused and single-responsibility
-- Use appropriate hooks for different use cases
-- Consider performance implications of state updates
-- Implement proper error handling and loading states
+5. **Challenges Overcome**
+   - Managing complex state updates
+   - Implementing proper data persistence
+   - Creating responsive design for all screen sizes
+   - Handling multiple user interactions
 
 ## React Router Implementation Notes
 
