@@ -28,7 +28,7 @@ function Animals() {
               <p className="species">{animal.species}</p>
               <div className="animal-stats">
                 <p className="age">Age: {animal.age} years</p>
-                <p className="weight">Weight: {animal.weight} lbs</p>
+                <p className="weight">Lbs: {animal.weight}</p>
               </div>
               <button 
                 onClick={() => handleFeed(animal)}
