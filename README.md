@@ -143,7 +143,7 @@ For this deliverable I did the following:
 
 ## 🚀 Service deliverable
 
-For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
+For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed. Complete this description as you complete the deliverable.
 
 - [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
 - [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
