@@ -1,18 +1,9 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { ZooContext } from '../context/ZooContext'
 import './animals.css'
 
 function Animals() {
   const { animals, removeAnimal, updateAnimal } = useContext(ZooContext)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [filterType, setFilterType] = useState('all')
-
-  const filteredAnimals = animals.filter(animal => {
-    const matchesSearch = animal.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         animal.species.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesType = filterType === 'all' || animal.type === filterType
-    return matchesSearch && matchesType
-  })
 
   const handleFeed = (animal) => {
     const newWeight = parseFloat(animal.weight) + 1
@@ -24,23 +15,8 @@ function Animals() {
       <h2>Animals in Your Zoo</h2>
       <p>Here's a list of all the animals currently in your zoo. Click on any animal for more details!</p>
 
-      <div className="filters">
-        <input 
-          type="text" 
-          placeholder="Search animals..." 
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <select value={filterType} onChange={(e) => setFilterType(e.target.value)}>
-          <option value="all">All Animals</option>
-          <option value="mammal">Mammals</option>
-          <option value="bird">Birds</option>
-          <option value="reptile">Reptiles</option>
-        </select>
-      </div>
-
       <div className="animal-grid">
-        {filteredAnimals.map(animal => (
+        {animals.map(animal => (
           <div key={animal.id} className="animal-card">
             <img 
               src={animal.imageUrl || "/images/placeholder.jpg"} 
