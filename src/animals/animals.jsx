@@ -27,7 +27,7 @@ function Animals() {
               <h3>{animal.name}</h3>
               <p className="species">{animal.species}</p>
               <div className="animal-stats">
-                <p className="age">Age: {animal.age} years</p>
+                <p className="age">Age: {animal.age}</p>
                 <p className="weight">Lbs: {animal.weight}</p>
               </div>
               <button 

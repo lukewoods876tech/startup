@@ -141,15 +141,15 @@ For this deliverable I did the following:
   - Search and filter functionality for animals
 - [x] **Application is responsive** - All components maintain functionality across screen sizes
 
-## 🚀 Service deliverable
+## 🚀 Service Deliverable
 
-For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed. Complete this description as you complete the deliverable.
+For this deliverable, I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
+- [x] **Node.js/Express HTTP service** - Created a Node.js/Express service with endpoints for user registration, login, and animal facts. The server is set up in `service/index.js` and includes a test endpoint to verify server functionality.
+- [x] **Static middleware for frontend** - Set up Express static middleware to serve the React frontend, ensuring seamless integration between the backend and frontend.
+- [x] **Calls to third-party service endpoints** - Implemented a simulated animal facts API endpoint in `src/about/about.jsx` to fetch random animal facts.
+- [x] **Backend service endpoints** - Created endpoints for user registration (`/api/register`), login (`/api/login`), and animal management (`/api/animals`). These endpoints are defined in `service/index.js` and `service/routes/animals.js`.
+- [x] **Frontend calls service endpoints** - Updated React components in `src/context/ZooContext.jsx`, `src/login/login.jsx`, and `src/register/Register.jsx` to call the backend service endpoints for fetching, adding, and removing animals, as well as user authentication.
 
 ## 🚀 DB/Login deliverable
 

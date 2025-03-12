@@ -1,6 +1,27 @@
+import { useState, useEffect } from 'react'
 import './about.css'
 
 function About() {
+  const [animalFact, setAnimalFact] = useState('')
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchAnimalFact = async () => {
+      try {
+        const response = await fetch('/api/animalfact')
+        const data = await response.json()
+        setAnimalFact(data.fact || 'Did you know? Animals are fascinating creatures!')
+      } catch (error) {
+        console.error('Error fetching animal fact:', error)
+        setAnimalFact('Did you know? Animals are fascinating creatures!')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchAnimalFact()
+  }, [])
+
   return (
     <main>
       <h2>What is MyZoo?</h2>
@@ -15,6 +36,15 @@ function About() {
         <li>Explore fun facts about different species.</li>
         <li>Simulate a real-life zoo experience.</li>
       </ul>
+
+      <div className="animal-fact-box">
+        <h3>Random Animal Fact</h3>
+        {loading ? (
+          <p>Loading animal fact...</p>
+        ) : (
+          <p>{animalFact}</p>
+        )}
+      </div>
 
       <h2>Why Choose MyZoo?</h2>
       <p>

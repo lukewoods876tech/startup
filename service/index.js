@@ -1,58 +1,57 @@
 const express = require('express');
-const app = express();
+const cors = require('cors');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('MongoDB connection error:', err));
+const app = express();
 
-// Configure multer for handling file uploads
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.static('public'));
+
+// Configure multer for file uploads
 const storage = multer.diskStorage({
-  destination: './public/uploads/',
+  destination: (req, file, cb) => {
+    const dir = './public/uploads';
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    cb(null, dir);
+  },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
   }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
-// Middleware
-app.use(express.json());
-app.use(express.static('public'));
-
-// User model
-const userSchema = new mongoose.Schema({
-  username: String,
-  password: String,
-  animals: [{
-    name: String,
-    species: String,
-    age: Number,
-    weight: Number,
-    imageUrl: String
-  }]
-});
-
-// In-memory store (replace with MongoDB later)
-let animals = [];
-
-// Load animals from file if exists
-try {
-  const data = fs.readFileSync('./data/animals.json', 'utf8');
-  animals = JSON.parse(data);
-} catch (err) {
-  console.log('No existing animals data found');
+// Create data directory if it doesn't exist
+if (!fs.existsSync('./data')) {
+  fs.mkdirSync('./data');
 }
 
-// User model
-const User = mongoose.model('User', userSchema);
+// Create users.json if it doesn't exist
+if (!fs.existsSync('./data/users.json')) {
+  fs.writeFileSync('./data/users.json', '[]');
+}
+
+// Load users from file
+let users = [];
+try {
+  const data = fs.readFileSync('./data/users.json', 'utf8');
+  users = JSON.parse(data);
+} catch (err) {
+  console.log('No existing users data found, creating empty array');
+  users = [];
+}
+
+// JWT secret
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
 // Authentication middleware
 const authenticateUser = (req, res, next) => {
@@ -61,107 +60,152 @@ const authenticateUser = (req, res, next) => {
     return res.status(401).json({ error: 'No token provided' });
   }
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.user = users.find(user => user.id === decoded.id);
+    if (!req.user) {
+      return res.status(401).json({ error: 'User not found' });
+    }
     next();
   } catch (error) {
     res.status(401).json({ error: 'Invalid token' });
   }
 };
 
-// Login endpoint
-app.post('/api/login', async (req, res) => {
-  const { username, password } = req.body;
-  try {
-    const user = await User.findOne({ username });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    res.json({ token });
-  } catch (error) {
-    res.status(500).json({ error: 'Login failed' });
-  }
-});
-
 // Register endpoint
 app.post('/api/register', async (req, res) => {
-  const { username, password } = req.body;
   try {
-    const existingUser = await User.findOne({ username });
-    if (existingUser) {
+    const { username, password } = req.body;
+    
+    // Check if username already exists
+    if (users.some(user => user.username === username)) {
       return res.status(400).json({ error: 'Username already exists' });
     }
+    
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ username, password: hashedPassword });
-    await user.save();
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    res.json({ token });
+    
+    // Create new user
+    const newUser = {
+      id: Date.now().toString(),
+      username,
+      password: hashedPassword,
+      animals: []
+    };
+    
+    // Add user to array
+    users.push(newUser);
+    
+    // Save users to file
+    fs.writeFileSync('./data/users.json', JSON.stringify(users));
+    
+    // Create token
+    const token = jwt.sign({ id: newUser.id }, JWT_SECRET, { expiresIn: '1d' });
+    
+    res.status(201).json({ token });
   } catch (error) {
+    console.error('Registration error:', error);
     res.status(500).json({ error: 'Registration failed' });
   }
 });
 
-// Protected animal endpoints
-app.get('/api/animals', authenticateUser, async (req, res) => {
+// Login endpoint
+app.post('/api/login', async (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
-    res.json(user.animals || []);
+    const { username, password } = req.body;
+    
+    // Find user
+    const user = users.find(user => user.username === username);
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid username or password' });
+    }
+    
+    // Check password
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ error: 'Invalid username or password' });
+    }
+    
+    // Create token
+    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1d' });
+    
+    res.json({ token });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch animals' });
+    console.error('Login error:', error);
+    res.status(500).json({ error: 'Login failed' });
   }
 });
 
-app.post('/api/animals', authenticateUser, upload.single('image'), async (req, res) => {
+// Get animals endpoint
+app.get('/api/animals', authenticateUser, (req, res) => {
+  res.json(req.user.animals || []);
+});
+
+// Add animal endpoint
+app.post('/api/animals', authenticateUser, upload.single('image'), (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
-    const animal = JSON.parse(req.body.animal);
+    let animal;
+    
+    if (req.file) {
+      // Handle file upload
+      const animalData = JSON.parse(req.body.animal);
+      animal = {
+        ...animalData,
+        imageUrl: `/uploads/${req.file.filename}`
+      };
+    } else {
+      // Handle JSON data
+      animal = req.body;
+    }
+    
     const newAnimal = {
       ...animal,
       id: Date.now(),
-      imageUrl: req.file ? `/uploads/${req.file.filename}` : null
+      dateAdded: new Date().toISOString()
     };
     
-    if (!user.animals) {
-      user.animals = [];
-    }
-    user.animals.push(newAnimal);
-    await user.save();
+    req.user.animals = req.user.animals || [];
+    req.user.animals.push(newAnimal);
+    
+    // Save users to file
+    fs.writeFileSync('./data/users.json', JSON.stringify(users));
+    
     res.json(newAnimal);
   } catch (error) {
+    console.error('Add animal error:', error);
     res.status(500).json({ error: 'Failed to add animal' });
   }
 });
 
-app.delete('/api/animals/:id', authenticateUser, async (req, res) => {
+// Delete animal endpoint
+app.delete('/api/animals/:id', authenticateUser, (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
     const animalId = parseInt(req.params.id);
-    const animal = user.animals.find(a => a.id === animalId);
     
-    if (animal && animal.imageUrl) {
-      fs.unlinkSync(path.join(__dirname, '../public', animal.imageUrl));
-    }
+    req.user.animals = req.user.animals.filter(animal => animal.id !== animalId);
     
-    user.animals = user.animals.filter(a => a.id !== animalId);
-    await user.save();
+    // Save users to file
+    fs.writeFileSync('./data/users.json', JSON.stringify(users));
+    
     res.json({ success: true });
   } catch (error) {
+    console.error('Delete animal error:', error);
     res.status(500).json({ error: 'Failed to delete animal' });
   }
 });
 
-app.put('/api/animals/:id', authenticateUser, async (req, res) => {
+// Update animal endpoint
+app.put('/api/animals/:id', authenticateUser, (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
     const animalId = parseInt(req.params.id);
     
-    user.animals = user.animals.map(animal => 
+    req.user.animals = req.user.animals.map(animal => 
       animal.id === animalId ? { ...animal, ...req.body } : animal
     );
     
-    await user.save();
-    res.json(user.animals.find(a => a.id === animalId));
+    // Save users to file
+    fs.writeFileSync('./data/users.json', JSON.stringify(users));
+    
+    res.json(req.user.animals.find(a => a.id === animalId));
   } catch (error) {
     res.status(500).json({ error: 'Failed to update animal' });
   }
@@ -170,15 +214,40 @@ app.put('/api/animals/:id', authenticateUser, async (req, res) => {
 // Add a random animal fact API
 app.get('/api/animalfact', async (req, res) => {
   try {
-    const response = await fetch('https://api.api-ninjas.com/v1/animals?name=lion');
-    const fact = await response.json();
-    res.json(fact);
+    // Since we're not using a real API for now, return a hardcoded fact
+    const facts = [
+      "Lions can sleep up to 20 hours a day.",
+      "Elephants can recognize themselves in a mirror.",
+      "Giraffes have the same number of neck vertebrae as humans: seven.",
+      "Penguins can jump as high as 6 feet in the air.",
+      "A group of flamingos is called a flamboyance.",
+      "Otters hold hands while sleeping so they don't drift apart.",
+      "Hippos secrete a red oily substance that acts as sunscreen.",
+      "Koalas sleep up to 22 hours a day.",
+      "Sloths can rotate their heads nearly 180 degrees.",
+      "Dolphins have names for each other."
+    ];
+    
+    const randomFact = facts[Math.floor(Math.random() * facts.length)];
+    res.json({ fact: randomFact });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch animal fact' });
+    res.status(500).json({ 
+      error: 'Failed to fetch animal fact',
+      fact: 'Did you know? Animals are fascinating creatures!' 
+    });
   }
 });
 
-const port = process.argv.length > 2 ? process.argv[2] : 4000;
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '../dist')));
+
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
+
+const port = process.env.PORT || 10000;
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 }); 

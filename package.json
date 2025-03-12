@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "Simon game in React",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "node service/index.js",
+    "dev:backend": "nodemon service/index.js",
+    "dev:frontend": "vite"
   },
   "keywords": [
     "zoo",
@@ -15,6 +18,12 @@
   "author": "Luke Woods",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.22.0"
@@ -23,6 +32,8 @@
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react": "^4.2.1",
+    "concurrently": "^9.1.2",
+    "nodemon": "^3.1.9",
     "vite": "^6.1.0"
   },
   "main": "index.js",

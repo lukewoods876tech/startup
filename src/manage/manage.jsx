@@ -3,15 +3,17 @@ import { ZooContext } from '../context/ZooContext'
 import './manage.css'
 
 function Manage() {
-  const { addAnimal } = useContext(ZooContext)
+  const { addAnimal, loading, error } = useContext(ZooContext)
   const [newAnimal, setNewAnimal] = useState({
     name: '',
     species: '',
     age: '',
     weight: '',
-    imageUrl: ''
+    imageUrl: '',
+    imageFile: null
   })
   const [previewImage, setPreviewImage] = useState(null)
+  const [submitting, setSubmitting] = useState(false)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -29,30 +31,40 @@ function Manage() {
         setPreviewImage(reader.result)
         setNewAnimal(prev => ({
           ...prev,
-          imageUrl: reader.result
+          imageUrl: reader.result,
+          imageFile: file
         }))
       }
       reader.readAsDataURL(file)
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    addAnimal(newAnimal)
-    // Reset form
-    setNewAnimal({
-      name: '',
-      species: '',
-      age: '',
-      weight: '',
-      imageUrl: ''
-    })
-    setPreviewImage(null)
+    setSubmitting(true)
+    try {
+      await addAnimal(newAnimal)
+      // Reset form
+      setNewAnimal({
+        name: '',
+        species: '',
+        age: '',
+        weight: '',
+        imageUrl: '',
+        imageFile: null
+      })
+      setPreviewImage(null)
+    } catch (err) {
+      console.error('Error in form submission:', err)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
     <main>
       <h2>Add New Animal</h2>
+      {error && <div className="error-message">{error}</div>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Animal Name:</label>
@@ -122,7 +134,12 @@ function Manage() {
           </div>
         )}
 
-        <button type="submit">Add Animal</button>
+        <button 
+          type="submit" 
+          disabled={submitting || loading}
+        >
+          {submitting ? 'Adding...' : 'Add Animal'}
+        </button>
       </form>
     </main>
   )

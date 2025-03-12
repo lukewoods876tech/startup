@@ -25,10 +25,13 @@ function Register() {
         throw new Error(data.error || 'Registration failed');
       }
 
-      const { token } = data;
-      localStorage.setItem('token', token);
+      localStorage.setItem('token', data.token);
       localStorage.setItem('username', username);
       localStorage.setItem('isLoggedIn', 'true');
+      
+      // Dispatch custom event to notify other components
+      window.dispatchEvent(new Event('loginStateChanged'));
+      
       navigate('/manage');
     } catch (error) {
       setError(error.message);
