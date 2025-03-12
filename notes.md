@@ -141,6 +141,35 @@ I implemented several new features in my zoo application:
    - Created public directory for static assets
    - Maintained consistent file structure
 
+## Service Deliverable
+
+In this deliverable, I focused on setting up a Node.js/Express service to support my zoo application. Here are some key things I learned:
+
+1. **Node.js/Express Setup**:
+   - I learned how to set up a basic Express server and define routes for handling HTTP requests.
+   - Implementing middleware for JSON parsing and static file serving was crucial for integrating the frontend with the backend.
+
+2. **API Endpoint Creation**:
+   - I created endpoints for user registration, login, and animal management. This taught me how to handle different HTTP methods (GET, POST, PUT) and manage request/response cycles.
+   - I learned the importance of structuring API endpoints to ensure they are RESTful and intuitive.
+
+3. **Authentication and Authorization**:
+   - Implementing token-based authentication using JWTs was a significant learning experience. I understood how to protect routes and ensure that only authenticated users can access certain functionalities.
+   - Managing tokens in localStorage and using them in request headers was essential for maintaining user sessions.
+
+4. **Frontend-Backend Integration**:
+   - I updated React components to interact with the backend service endpoints. This involved using `fetch` for API calls and handling asynchronous operations with `async/await`.
+   - I learned how to manage state updates in React based on API responses, ensuring the UI reflects the current state of the application.
+
+5. **Error Handling**:
+   - Implementing error handling both on the server and client sides was crucial. I learned how to provide meaningful error messages to users and log errors for debugging purposes.
+
+6. **Testing and Debugging**:
+   - Running the server locally and testing endpoints with tools like Postman helped me verify the functionality of my API.
+   - Debugging involved checking server logs and using browser developer tools to inspect network requests.
+
+Overall, this deliverable enhanced my understanding of full-stack development, particularly the interaction between a React frontend and an Express backend. It also highlighted the importance of secure and efficient data handling in web applications.
+
 ```jsx
 <div className="input-group sound-button-container">
   {calmSoundTypes.map((sound, index) => (
