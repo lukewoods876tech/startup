@@ -43,6 +43,9 @@ export function ZooProvider({ children }) {
 
   const addAnimal = async (animalData) => {
     setLoading(true)
+    // Clear any previous errors when starting a new operation
+    setError(null)
+    
     try {
       const token = localStorage.getItem('token')
       if (!token) {
@@ -63,12 +66,10 @@ export function ZooProvider({ children }) {
           type: animalData.type || 'mammal' // Default type if not provided
         }))
         
-        // Important! Include the Authorization header when uploading files
         response = await fetch('/api/animals', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`
-            // Don't set Content-Type when using FormData - browser sets it with boundary
           },
           body: formData
         })
