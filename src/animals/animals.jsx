@@ -1,16 +1,35 @@
 import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ZooContext } from '../context/ZooContext'
+import { useNotification } from '../context/NotificationContext'
 import './animals.css'
 
 function Animals() {
   const { animals, removeAnimal, updateAnimal } = useContext(ZooContext)
+  const { showNotification } = useNotification()
   const [searchTerm, setSearchTerm] = useState('')
+  const [animalToDelete, setAnimalToDelete] = useState(null)
   const navigate = useNavigate()
 
   const handleFeed = (animal) => {
     const newWeight = parseFloat(animal.weight) + 1
     updateAnimal(animal.id, { weight: newWeight.toString() })
+  }
+  
+  const handleDeleteClick = (animal) => {
+    setAnimalToDelete(animal)
+  }
+  
+  const handleConfirmDelete = () => {
+    if (animalToDelete) {
+      removeAnimal(animalToDelete.id)
+      showNotification(`${animalToDelete.name} has been removed from your zoo.`)
+      setAnimalToDelete(null)
+    }
+  }
+  
+  const handleCancelDelete = () => {
+    setAnimalToDelete(null)
   }
 
   const filteredAnimals = animals.filter(animal => {
@@ -63,7 +82,7 @@ function Animals() {
                 Feed Animal
               </button>
               <button 
-                onClick={() => removeAnimal(animal.id)}
+                onClick={() => handleDeleteClick(animal)}
                 className="remove-button"
               >
                 Euthanize Animal
@@ -72,6 +91,21 @@ function Animals() {
           </div>
         ))}
       </div>
+      
+      {/* Confirmation Modal */}
+      {animalToDelete && (
+        <div className="delete-confirmation-overlay">
+          <div className="delete-confirmation-modal">
+            <span className="close-button" onClick={handleCancelDelete}>&times;</span>
+            <h3>Confirm Euthanization</h3>
+            <p>Are you sure you want to euthanize {animalToDelete.name}? This action cannot be undone.</p>
+            <div className="confirmation-buttons">
+              <button onClick={handleCancelDelete} className="cancel-button">Cancel</button>
+              <button onClick={handleConfirmDelete} className="confirm-button">Confirm</button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }
