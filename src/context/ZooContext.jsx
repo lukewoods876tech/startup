@@ -41,28 +41,34 @@ export function ZooProvider({ children }) {
     fetchAnimals()
   }, [])
 
-  const addAnimal = async (animal) => {
+  const addAnimal = async (animalData) => {
+    setLoading(true)
     try {
       const token = localStorage.getItem('token')
-      if (!token) return
+      if (!token) {
+        throw new Error('No authentication token found')
+      }
 
       let response
       
-      if (animal.imageFile) {
+      if (animalData.imageFile) {
         // Handle file upload
         const formData = new FormData()
-        formData.append('image', animal.imageFile)
+        formData.append('image', animalData.imageFile)
         formData.append('animal', JSON.stringify({
-          name: animal.name,
-          species: animal.species,
-          age: animal.age,
-          weight: animal.weight
+          name: animalData.name,
+          species: animalData.species,
+          age: animalData.age,
+          weight: animalData.weight,
+          type: animalData.type || 'mammal' // Default type if not provided
         }))
         
+        // Important! Include the Authorization header when uploading files
         response = await fetch('/api/animals', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`
+            // Don't set Content-Type when using FormData - browser sets it with boundary
           },
           body: formData
         })
@@ -71,24 +77,33 @@ export function ZooProvider({ children }) {
         response = await fetch('/api/animals', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify(animal)
+          body: JSON.stringify({
+            name: animalData.name,
+            species: animalData.species,
+            age: animalData.age,
+            weight: animalData.weight,
+            type: animalData.type || 'mammal'
+          })
         })
       }
-
+      
       if (!response.ok) {
-        throw new Error('Failed to add animal')
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to add animal')
       }
-
+      
       const newAnimal = await response.json()
-      setAnimals(prev => [...prev, newAnimal])
+      setAnimals(prevAnimals => [...prevAnimals, newAnimal])
+      
       return newAnimal
-    } catch (err) {
-      setError(err.message)
-      console.error('Error adding animal:', err)
-      throw err
+    } catch (error) {
+      setError(error.message || 'Failed to add animal')
+      throw error
+    } finally {
+      setLoading(false)
     }
   }
 

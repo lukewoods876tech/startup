@@ -1,9 +1,13 @@
 import { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ZooContext } from '../context/ZooContext'
+import { useNotification } from '../context/NotificationContext'
 import './manage.css'
 
 function Manage() {
   const { addAnimal, loading, error } = useContext(ZooContext)
+  const { showNotification } = useNotification()
+  const navigate = useNavigate()
   const [newAnimal, setNewAnimal] = useState({
     name: '',
     species: '',
@@ -43,7 +47,8 @@ function Manage() {
     e.preventDefault()
     setSubmitting(true)
     try {
-      await addAnimal(newAnimal)
+      const addedAnimal = await addAnimal(newAnimal)
+      
       // Reset form
       setNewAnimal({
         name: '',
@@ -54,8 +59,13 @@ function Manage() {
         imageFile: null
       })
       setPreviewImage(null)
+      
+      // Show notification and navigate to animals page
+      showNotification(`Successfully added ${addedAnimal.name} to your zoo!`)
+      navigate('/animals')
     } catch (err) {
       console.error('Error in form submission:', err)
+      showNotification('Failed to add animal', 'error')
     } finally {
       setSubmitting(false)
     }
