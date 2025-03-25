@@ -32,7 +32,7 @@ function Login() {
       // Dispatch custom event to notify other components
       window.dispatchEvent(new Event('loginStateChanged'))
       
-      navigate('/manage')
+      navigate('/animals')
     } catch (error) {
       setError(error.message)
     }
