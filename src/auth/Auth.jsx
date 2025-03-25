@@ -19,22 +19,22 @@ function Auth() {
         body: JSON.stringify({ username, password })
       })
 
-      const data = await response.json()
-      
-      if (!response.ok) {
-        throw new Error(data.error || 'Login failed')
+      if (response.ok) {
+        const data = await response.json()
+        localStorage.setItem('token', data.token)
+        localStorage.setItem('username', username)
+        localStorage.setItem('isLoggedIn', 'true')
+        
+        // Dispatch custom event to notify other components
+        window.dispatchEvent(new Event('loginStateChanged'))
+        
+        navigate('/animals')
+      } else {
+        setError('Invalid username or password')
       }
-
-      localStorage.setItem('token', data.token)
-      localStorage.setItem('username', username)
-      localStorage.setItem('isLoggedIn', 'true')
-      
-      // Dispatch custom event to notify other components
-      window.dispatchEvent(new Event('loginStateChanged'))
-      
-      navigate('/manage')
-    } catch (error) {
-      setError(error.message)
+    } catch (err) {
+      console.error('Login error:', err)
+      setError('An error occurred during login')
     }
   }
 
