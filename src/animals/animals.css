@@ -165,4 +165,17 @@
     flex-direction: column;
     align-items: stretch;
   }
+}
+
+/* Add this to your existing animals.css file */
+.full-width-search {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.filters {
+  margin-bottom: 20px;
 } 

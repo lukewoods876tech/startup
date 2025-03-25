@@ -6,7 +6,6 @@ import './animals.css'
 function Animals() {
   const { animals, removeAnimal, updateAnimal } = useContext(ZooContext)
   const [searchTerm, setSearchTerm] = useState('')
-  const [filterType, setFilterType] = useState('all')
   const navigate = useNavigate()
 
   const handleFeed = (animal) => {
@@ -17,8 +16,7 @@ function Animals() {
   const filteredAnimals = animals.filter(animal => {
     const matchesSearch = animal.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          animal.species.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesType = filterType === 'all' || animal.type === filterType
-    return matchesSearch && matchesType
+    return matchesSearch
   })
 
   return (
@@ -32,13 +30,8 @@ function Animals() {
           placeholder="Search animals..." 
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          className="full-width-search"
         />
-        <select value={filterType} onChange={(e) => setFilterType(e.target.value)}>
-          <option value="all">All Animals</option>
-          <option value="mammal">Mammals</option>
-          <option value="bird">Birds</option>
-          <option value="reptile">Reptiles</option>
-        </select>
       </div>
 
       <div className="animal-grid">
