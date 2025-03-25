@@ -262,6 +262,9 @@ app.get('/api/animalfact', async (req, res) => {
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../dist')));
 
+// Add explicit route for the images directory
+app.use('/images', express.static(path.join(__dirname, '../dist/images')));
+
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
