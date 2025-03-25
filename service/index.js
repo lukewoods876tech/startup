@@ -225,7 +225,28 @@ app.get('/api/animalfact', async (req, res) => {
       "Hippos secrete a red oily substance that acts as sunscreen.",
       "Koalas sleep up to 22 hours a day.",
       "Sloths can rotate their heads nearly 180 degrees.",
-      "Dolphins have names for each other."
+      "Dolphins have names for each other.",
+      // 20 new animal facts
+      "Crows can recognize human faces and hold grudges against those who wrong them.",
+      "A rhinoceros's horn is made of keratin, the same material as human fingernails.",
+      "Octopuses have three hearts and blue blood.",
+      "Honeybees can recognize human faces.",
+      "Sharks have been around longer than trees, existing for over 400 million years.",
+      "Polar bears have black skin underneath their white fur.",
+      "Platypuses glow blue-green under UV light.",
+      "Mantis shrimp can see colors humans can't even imagine.",
+      "Tigers have striped skin, not just striped fur.",
+      "Wombats are the only animals that produce cube-shaped poop.",
+      "An ostrich's eye is bigger than its brain.",
+      "Cats can't taste sweetness due to a genetic mutation.",
+      "Tardigrades (water bears) can survive in space.",
+      "Butterflies taste with their feet.",
+      "A group of owls is called a parliament.",
+      "Sea otters have the densest fur of any animal, with up to 1 million hairs per square inch.",
+      "Reindeer eyes turn blue in winter to help them see better in dark Arctic conditions.",
+      "Goats have rectangular pupils that allow them to see 320-340 degrees around them.",
+      "Hummingbirds can fly backwards and are the only birds able to do so.",
+      "A cockroach can live for several weeks without its head."
     ];
     
     const randomFact = facts[Math.floor(Math.random() * facts.length)];
