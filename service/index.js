@@ -288,6 +288,11 @@ app.get('/api/animalfact', async (req, res) => {
   }
 });
 
+// Add this near the top of your routes
+app.get('/api/test', (req, res) => {
+  res.json({ status: 'Server is running' });
+});
+
 // Fallback route for SPA
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
