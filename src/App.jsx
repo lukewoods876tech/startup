@@ -1,29 +1,52 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer'
-import Home from './home/home'
-import Manage from './manage/manage'
-import Animals from './animals/animals'
-import About from './about/about'
+import Home from './home/Home'
+import Manage from './manage/Manage'
+import Animals from './animals/Animals'
+import About from './about/About'
 import Auth from './auth/Auth'
 import { ZooProvider } from './context/ZooContext'
 import { NotificationProvider } from './context/NotificationContext'
+import { AuthProvider } from './context/AuthContext'
+import ProtectedRoute from './components/ProtectedRoute'
+import Login from './login/Login'
+import Register from './register/Register'
 
 function App() {
   return (
-    <ZooProvider>
-      <NotificationProvider>
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/manage" element={<Manage />} />
-          <Route path="/animals" element={<Animals />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/auth" element={<Auth />} />
-        </Routes>
-        <Footer />
-      </NotificationProvider>
-    </ZooProvider>
+    <AuthProvider>
+      <ZooProvider>
+        <NotificationProvider>
+          <Navigation />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route 
+              path="/animals" 
+              element={
+                <ProtectedRoute>
+                  <Animals />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/manage" 
+              element={
+                <ProtectedRoute>
+                  <Manage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route path="/login" element={<Navigate to="/auth" replace />} />
+            <Route path="/register" element={<Navigate to="/auth" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+          <Footer />
+        </NotificationProvider>
+      </ZooProvider>
+    </AuthProvider>
   )
 }
 

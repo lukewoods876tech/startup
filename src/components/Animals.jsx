@@ -43,11 +43,21 @@ function Animals() {
 
         {/* Existing Animals */}
         {filteredAnimals.map(animal => (
-          <div key={animal.id} className="animal-card">
-            {/* Your existing animal card content */}
+          <div key={animal.id || animal._id} className="animal-card">
+            <img 
+              src={animal.imageUrl ? animal.imageUrl : "/images/placeholder.jpg"} 
+              alt={animal.name} 
+              className="animal-image"
+              onError={(e) => {
+                console.log("Error loading image:", animal.imageUrl);
+                e.target.src = "/images/placeholder.jpg";
+                e.target.onerror = null;
+              }}
+            />
             <h3>{animal.name}</h3>
             <p>{animal.species}</p>
-            {/* Rest of your animal card content */}
+            {animal.age && <p>Age: {animal.age}</p>}
+            {animal.weight && <p>Lbs: {animal.weight}</p>}
           </div>
         ))}
       </div>

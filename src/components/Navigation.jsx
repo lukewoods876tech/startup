@@ -1,52 +1,18 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import './navigation.css'
 
 function Navigation() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [username, setUsername] = useState('')
-  const navigate = useNavigate()
-
-  // This function will check the login state
-  const checkLoginState = () => {
-    const loggedIn = localStorage.getItem('isLoggedIn') === 'true'
-    const storedUsername = localStorage.getItem('username')
-    setIsLoggedIn(loggedIn)
-    setUsername(storedUsername || '')
-  }
-
-  // Check login state when component mounts
-  useEffect(() => {
-    checkLoginState()
-    
-    // Add event listener for storage changes
-    window.addEventListener('storage', checkLoginState)
-    
-    // Add custom event listener for login state changes
-    window.addEventListener('loginStateChanged', checkLoginState)
-    
-    return () => {
-      window.removeEventListener('storage', checkLoginState)
-      window.removeEventListener('loginStateChanged', checkLoginState)
-    }
-  }, [])
-
-  const handleLogout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('isLoggedIn')
-    localStorage.removeItem('username')
-    setIsLoggedIn(false)
-    setUsername('')
-    
-    // Dispatch custom event to notify other components
-    window.dispatchEvent(new Event('loginStateChanged'))
-    
-    navigate('/')
-  }
+  const { user, logout } = useAuth()
+  
+  // Determine if user is logged in based on user object from context
+  const isLoggedIn = !!user
+  
+  console.log('Navigation render - isLoggedIn:', isLoggedIn, 'user:', user)
 
   return (
     <header>
-      <h1>{username ? `Welcome to MyZoo, ${username}!` : 'Welcome to MyZoo!'}</h1>
+      <h1>Welcome to MyZoo!</h1>
       <nav>
         <ul>
           <li><Link to="/">Home</Link></li>
@@ -55,7 +21,7 @@ function Navigation() {
               <li><Link to="/manage">Manage Zoo</Link></li>
               <li><Link to="/animals">View Animals</Link></li>
               <li><Link to="/about">About</Link></li>
-              <li><button onClick={handleLogout}>Logout</button></li>
+              <li><button onClick={logout}>Logout</button></li>
             </>
           ) : (
             <>
@@ -66,7 +32,7 @@ function Navigation() {
         </ul>
       </nav>
     </header>
-  )
+  );
 }
 
-export default Navigation 
+export default Navigation;

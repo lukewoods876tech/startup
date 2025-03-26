@@ -11,7 +11,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -22,11 +22,13 @@ function Login() {
       const data = await response.json()
       
       if (!response.ok) {
-        throw new Error(data.error || 'Login failed')
+        const errorData = await response.json()
+        throw new Error(errorData.message || errorData.error || 'Login failed')
       }
 
       localStorage.setItem('token', data.token)
-      localStorage.setItem('username', username)
+      localStorage.setItem('user', JSON.stringify(data.user))
+      localStorage.setItem('username', data.user.username)
       localStorage.setItem('isLoggedIn', 'true')
       
       // Dispatch custom event to notify other components

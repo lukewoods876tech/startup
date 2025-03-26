@@ -1,1 +1,7 @@
 node_modules
+
+# MongoDB config
+service/dbconfig.json
+
+# Other entries...
+.env

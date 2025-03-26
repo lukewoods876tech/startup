@@ -155,18 +155,18 @@ For this deliverable, I did the following. I checked the box `[x]` and added a d
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **User registration** - I did not complete this part of the deliverable.
-- [ ] **User login and logout** - I did not complete this part of the deliverable.
-- [ ] **Stores data in MongoDB** - I did not complete this part of the deliverable.
-- [ ] **Stores credentials in MongoDB** - I did not complete this part of the deliverable.
-- [ ] **Restricts functionality based on authentication** - I did not complete this part of the deliverable.
+- [x] **User registration** - Created a registration form with validation. Implemented backend endpoint for user creation in MongoDB with secure password hashing via bcrypt.
+- [x] **User login and logout** - Built login functionality with JWT token authentication. Added persistent login state using localStorage and created a logout function that clears credentials.
+- [x] **Stores data in MongoDB** - Connected to MongoDB using Mongoose. Created schemas for Users and Zoo data.
+- [x] **Stores credentials in MongoDB** - Implemented secure storage of user credentials in MongoDB with encrypted passwords.
+- [x] **Restricts functionality based on authentication** - Added protected routes that require authentication. Zoo management and animal viewing are now restricted to logged-in users only.
 
 ## 🚀 WebSocket deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+- [x] **Backend listens for WebSocket connection** - Created a WebSocket server in `service/index.js` that listens for connections from the frontend.
+- [x] **Frontend makes WebSocket connection** - Implemented a WebSocket client in `src/context/WebSocketContext.jsx` that connects to the server.
+- [x] **Data sent over WebSocket connection** - Set up real-time animal activity notifications using WebSockets. When a user adds or removes an animal, this information is broadcast to all connected clients.
+- [x] **WebSocket data displayed** - Added a notification component that displays real-time updates about animal additions and removals from other users.
+- [x] **Application is fully functional** - The application now includes all required features: MongoDB storage, user authentication, and real-time WebSocket notifications.

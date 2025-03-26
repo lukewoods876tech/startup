@@ -38,6 +38,8 @@ function Animals() {
     return matchesSearch
   })
 
+  console.log('Animals loaded:', animals);
+
   return (
     <main>
       <h2>Animals in Your Zoo</h2>
@@ -67,6 +69,12 @@ function Animals() {
               src={animal.imageUrl || "/images/placeholder.jpg"} 
               alt={animal.name} 
               className="animal-image"
+              onError={(e) => {
+                console.error(`Failed to load image from: ${animal.imageUrl}`);
+                console.error('Animal object:', animal);
+                e.target.src = "/images/placeholder.jpg";
+                e.target.onerror = null;
+              }}
             />
             <div className="animal-info">
               <h3>{animal.name}</h3>

@@ -6,13 +6,38 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 require('dotenv').config();
+require('./db'); // Connect to MongoDB
 
 const app = express();
+const authRoutes = require('./routes/auth');
+const animalRoutes = require('./routes/animals');
+const { authenticateToken } = require('./middleware/auth');
 
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, '../dist')));
+
+// Add this before the static middleware setup
+const uploadDir = path.join(__dirname, 'public', 'uploads');
+if (!fs.existsSync(path.join(__dirname, 'public'))) {
+  fs.mkdirSync(path.join(__dirname, 'public'), { recursive: true });
+  console.log('Created public directory');
+}
+
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+  console.log('Created uploads directory at:', uploadDir);
+}
+
+// Make sure permissions are set correctly
+fs.chmodSync(uploadDir, 0o755);
+
+// Set up static file serving with explicit logging
+app.use('/uploads', (req, res, next) => {
+  console.log('Static file request:', req.url);
+  next();
+}, express.static(path.join(__dirname, 'public', 'uploads')));
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
@@ -70,6 +95,10 @@ const authenticateUser = (req, res, next) => {
     res.status(401).json({ error: 'Invalid token' });
   }
 };
+
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/animals', authenticateToken, animalRoutes); // Protected route
 
 // Register endpoint
 app.post('/api/register', async (req, res) => {
@@ -259,19 +288,13 @@ app.get('/api/animalfact', async (req, res) => {
   }
 });
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../dist')));
-
-// Add explicit route for the images directory
-app.use('/images', express.static(path.join(__dirname, '../dist/images')));
-
-// The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
+// Fallback route for SPA
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
-const port = process.env.PORT || 4000;
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+// Start server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 }); 

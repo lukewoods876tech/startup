@@ -124,7 +124,10 @@ export function ZooProvider({ children }) {
         throw new Error('Failed to remove animal')
       }
 
-      setAnimals(prev => prev.filter(animal => animal.id !== animalId))
+      setAnimals(prev => prev.filter(animal => {
+        // Handle both id and _id formats from MongoDB
+        return animal.id !== animalId && animal._id !== animalId;
+      }))
     } catch (err) {
       setError(err.message)
       console.error('Error removing animal:', err)
@@ -149,9 +152,13 @@ export function ZooProvider({ children }) {
         throw new Error('Failed to update animal')
       }
 
-      setAnimals(prev => prev.map(animal => 
-        animal.id === animalId ? { ...animal, ...updates } : animal
-      ))
+      setAnimals(prev => prev.map(animal => {
+        // Handle both id and _id formats from MongoDB
+        if (animal.id === animalId || animal._id === animalId) {
+          return { ...animal, ...updates };
+        }
+        return animal;
+      }))
     } catch (err) {
       setError(err.message)
       console.error('Error updating animal:', err)

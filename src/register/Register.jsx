@@ -1,40 +1,40 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './register.css';
 
 function Register() {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { register } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    
+    // Basic check that fields aren't empty
+    if (!username || !password || !email) {
+      setError('All fields are required');
+      return;
+    }
+    
     try {
-      const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-      });
-
-      const data = await response.json();
+      console.log('Registering with:', { username, email, password: '***' });
       
-      if (!response.ok) {
-        throw new Error(data.error || 'Registration failed');
+      const result = await register(username, password, email);
+      
+      if (result.success) {
+        window.dispatchEvent(new Event('loginStateChanged'));
+        navigate('/manage');
+      } else {
+        setError(result.message || 'Registration failed');
       }
-
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('username', username);
-      localStorage.setItem('isLoggedIn', 'true');
-      
-      // Dispatch custom event to notify other components
-      window.dispatchEvent(new Event('loginStateChanged'));
-      
-      navigate('/manage');
     } catch (error) {
-      setError(error.message);
+      console.error('Registration error:', error);
+      setError(error.message || 'An unexpected error occurred');
     }
   };
 
@@ -53,6 +53,16 @@ function Register() {
           onChange={(e) => setUsername(e.target.value)}
           required 
         />
+        
+        <label htmlFor="email">Email:</label>
+        <input 
+          type="email" 
+          id="email" 
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required 
+        />
+        
         <label htmlFor="password">Password:</label>
         <input 
           type="password" 
@@ -61,6 +71,7 @@ function Register() {
           onChange={(e) => setPassword(e.target.value)}
           required 
         />
+        
         <button type="submit">Register</button>
       </form>
     </main>
