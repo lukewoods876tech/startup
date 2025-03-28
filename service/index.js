@@ -1,11 +1,12 @@
 const express = require('express');
 const cors = require('cors');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 require('dotenv').config();
+const { connectDB } = require('./db');
+const { uploadToS3 } = require('./s3');
 
 const app = express();
 
@@ -15,20 +16,18 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Configure multer for file uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const dir = './public/uploads';
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    cb(null, dir);
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  }
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: 'public/uploads/',
+    filename: (req, file, cb) => {
+      const filetype = file.originalname.split('.').pop();
+      const id = Math.round(Math.random() * 1e9);
+      const filename = `${id}.${filetype}`;
+      cb(null, filename);
+    },
+  }),
+  limits: { fileSize: 64000 },
 });
-
-const upload = multer({ storage });
 
 // Create data directory if it doesn't exist
 if (!fs.existsSync('./data')) {
@@ -49,27 +48,6 @@ try {
   console.log('No existing users data found, creating empty array');
   users = [];
 }
-
-// JWT secret
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
-
-// Authentication middleware
-const authenticateUser = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) {
-    return res.status(401).json({ error: 'No token provided' });
-  }
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = users.find(user => user.id === decoded.id);
-    if (!req.user) {
-      return res.status(401).json({ error: 'User not found' });
-    }
-    next();
-  } catch (error) {
-    res.status(401).json({ error: 'Invalid token' });
-  }
-};
 
 // Register endpoint
 app.post('/api/register', async (req, res) => {
@@ -98,10 +76,7 @@ app.post('/api/register', async (req, res) => {
     // Save users to file
     fs.writeFileSync('./data/users.json', JSON.stringify(users));
     
-    // Create token
-    const token = jwt.sign({ id: newUser.id }, JWT_SECRET, { expiresIn: '1d' });
-    
-    res.status(201).json({ token });
+    res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
     console.error('Registration error:', error);
     res.status(500).json({ error: 'Registration failed' });
@@ -125,10 +100,7 @@ app.post('/api/login', async (req, res) => {
       return res.status(401).json({ error: 'Invalid username or password' });
     }
     
-    // Create token
-    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1d' });
-    
-    res.json({ token });
+    res.json({ message: 'Login successful' });
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ error: 'Login failed' });
@@ -136,12 +108,12 @@ app.post('/api/login', async (req, res) => {
 });
 
 // Get animals endpoint
-app.get('/api/animals', authenticateUser, (req, res) => {
+app.get('/api/animals', (req, res) => {
   res.json(req.user.animals || []);
 });
 
 // Add animal endpoint
-app.post('/api/animals', authenticateUser, upload.single('image'), (req, res) => {
+app.post('/api/animals', upload.single('file'), (req, res) => {
   try {
     let animal;
     
@@ -163,6 +135,7 @@ app.post('/api/animals', authenticateUser, upload.single('image'), (req, res) =>
       dateAdded: new Date().toISOString()
     };
     
+    // Assuming req.user is set by some other means
     req.user.animals = req.user.animals || [];
     req.user.animals.push(newAnimal);
     
@@ -177,7 +150,7 @@ app.post('/api/animals', authenticateUser, upload.single('image'), (req, res) =>
 });
 
 // Delete animal endpoint
-app.delete('/api/animals/:id', authenticateUser, (req, res) => {
+app.delete('/api/animals/:id', (req, res) => {
   try {
     const animalId = parseInt(req.params.id);
     
@@ -194,7 +167,7 @@ app.delete('/api/animals/:id', authenticateUser, (req, res) => {
 });
 
 // Update animal endpoint
-app.put('/api/animals/:id', authenticateUser, (req, res) => {
+app.put('/api/animals/:id', (req, res) => {
   try {
     const animalId = parseInt(req.params.id);
     
@@ -247,7 +220,28 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
-const port = process.env.PORT || 4000;
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-}); 
+// New endpoint for file upload
+app.post('/upload', upload.single('file'), async (req, res) => {
+  if (req.file) {
+    try {
+      await uploadToS3(req.file.filename, req.file.buffer);
+      res.send({
+        message: 'Upload succeeded',
+        file: req.file.filename,
+      });
+    } catch (error) {
+      res.status(500).send({ message: 'S3 upload failed', error: error.message });
+    }
+  } else {
+    res.status(400).send({ message: 'Upload failed' });
+  }
+});
+
+(async () => {
+  const db = await connectDB();
+  // Start your server here
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+  });
+})(); 
