@@ -1,17 +1,5 @@
 const jwt = require('jsonwebtoken');
-const fs = require('fs');
-const path = require('path');
-
-// Load config from file
-let dbConfig;
-try {
-  const configPath = path.join(__dirname, '..', 'dbconfig.json');
-  const configFile = fs.readFileSync(configPath, 'utf8');
-  dbConfig = JSON.parse(configFile);
-} catch (error) {
-  console.error('Error loading dbconfig.json:', error);
-  process.exit(1);
-}
+const { getJwtSecret } = require('../db');
 
 function authenticateToken(req, res, next) {
   // Get token from header
@@ -26,10 +14,16 @@ function authenticateToken(req, res, next) {
   }
   
   try {
-    const decoded = jwt.verify(token, dbConfig.jwt.secret);
+    const jwtSecret = getJwtSecret();
+    if (!jwtSecret) {
+      throw new Error('JWT secret not configured');
+    }
+    
+    const decoded = jwt.verify(token, jwtSecret);
     req.user = decoded;
     next();
   } catch (error) {
+    console.error('Token verification error:', error.message);
     return res.status(403).json({ 
       success: false, 
       message: 'Invalid token' 

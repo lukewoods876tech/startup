@@ -11,7 +11,8 @@ const animalSchema = new mongoose.Schema({
   },
   age: {
     type: Number,
-    required: true
+    required: true,
+    min: [0, 'Age cannot be negative']
   },
   weight: {
     type: Number,
