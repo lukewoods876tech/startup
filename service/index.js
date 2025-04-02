@@ -7,11 +7,13 @@ const path = require('path');
 const fs = require('fs');
 require('dotenv').config();
 require('./db'); // Connect to MongoDB
+const { S3Client, ListBucketsCommand } = require('@aws-sdk/client-s3');
+const { fromEnv } = require('@aws-sdk/credential-providers');
 
 const app = express();
-const authRoutes = require('./routes/auth');
-const animalRoutes = require('./routes/animals');
-const { authenticateToken } = require('./middleware/auth');
+const authRoutes = require('./auth.js');
+const animalRoutes = require('./animals.js');
+const { authenticateToken } = require('./middleware.js');
 
 // Middleware
 app.use(cors());
@@ -299,8 +301,39 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
+// Add this after your other initialization code
+// Validate S3 configuration
+async function validateS3Config() {
+  try {
+    console.log('Validating S3 configuration...');
+    const s3Client = new S3Client({
+      region: process.env.AWS_REGION || 'us-east-1',
+      credentials: fromEnv()
+    });
+    
+    const { Buckets } = await s3Client.send(new ListBucketsCommand({}));
+    console.log('S3 connection successful. Available buckets:');
+    Buckets.forEach(bucket => console.log(` - ${bucket.Name}`));
+    
+    const targetBucket = process.env.S3_BUCKET_NAME;
+    const bucketExists = Buckets.some(bucket => bucket.Name === targetBucket);
+    
+    if (!bucketExists) {
+      console.warn(`Warning: Target bucket "${targetBucket}" not found in your account.`);
+    } else {
+      console.log(`Target bucket "${targetBucket}" found and accessible.`);
+    }
+  } catch (error) {
+    console.error('S3 configuration validation failed:', error.message);
+    console.warn('Application will continue, but S3 functionality may not work correctly.');
+  }
+}
+
+// Call this before starting your server
+validateS3Config().catch(console.error);
+
 // Start server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 }); 

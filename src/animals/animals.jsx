@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { ZooContext } from '../context/ZooContext'
 import { useNotification } from '../context/NotificationContext'
 import './animals.css'
+import { config } from '../config'
 
 function Animals() {
   const { animals, removeAnimal, updateAnimal } = useContext(ZooContext)
@@ -64,15 +65,19 @@ function Animals() {
         </div>
 
         {filteredAnimals.map(animal => (
-          <div key={animal.id} className="animal-card">
+          <div key={animal.id || animal._id} className="animal-card">
             <img 
-              src={animal.imageUrl || "/images/placeholder.jpg"} 
+              src={animal.imageUrl && animal.imageUrl.startsWith('/uploads/') 
+                ? `https://${config.s3BucketName}.s3.amazonaws.com${animal.imageUrl}` 
+                : animal.imageUrl || "/images/placeholder.jpg"} 
               alt={animal.name} 
               className="animal-image"
               onError={(e) => {
-                console.error(`Failed to load image from: ${animal.imageUrl}`);
-                console.error('Animal object:', animal);
-                e.target.src = "/images/placeholder.jpg";
+                if (e.target.src !== window.location.origin + "/images/placeholder.jpg") {
+                  console.error(`Failed to load image from: ${animal.imageUrl}`);
+                  console.error('Animal object:', animal);
+                  e.target.src = "/images/placeholder.jpg";
+                }
                 e.target.onerror = null;
               }}
             />
