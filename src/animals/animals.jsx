@@ -14,7 +14,7 @@ function Animals() {
 
   const handleFeed = (animal) => {
     const newWeight = parseFloat(animal.weight) + 1
-    updateAnimal(animal.id, { weight: newWeight.toString() })
+    updateAnimal(animal._id || animal.id, { weight: newWeight.toString() })
   }
   
   const handleDeleteClick = (animal) => {
@@ -23,7 +23,7 @@ function Animals() {
   
   const handleConfirmDelete = () => {
     if (animalToDelete) {
-      removeAnimal(animalToDelete.id)
+      removeAnimal(animalToDelete._id || animalToDelete.id)
       showNotification(`${animalToDelete.name} has been removed from your zoo.`)
       setAnimalToDelete(null)
     }

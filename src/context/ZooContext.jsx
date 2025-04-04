@@ -134,18 +134,23 @@ export function ZooProvider({ children }) {
     }
   }
 
-  const updateAnimal = async (animalId, updates) => {
+  const updateAnimal = async (animalId, updateData) => {
+    setLoading(true)
+    setError(null)
+    
     try {
       const token = localStorage.getItem('token')
-      if (!token) return
+      if (!token) {
+        throw new Error('No authentication token found')
+      }
 
       const response = await fetch(`/api/animals/${animalId}`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(updates)
+        body: JSON.stringify(updateData)
       })
 
       if (!response.ok) {
@@ -155,13 +160,15 @@ export function ZooProvider({ children }) {
       setAnimals(prev => prev.map(animal => {
         // Handle both id and _id formats from MongoDB
         if (animal.id === animalId || animal._id === animalId) {
-          return { ...animal, ...updates };
+          return { ...animal, ...updateData };
         }
         return animal;
       }))
     } catch (err) {
       setError(err.message)
       console.error('Error updating animal:', err)
+    } finally {
+      setLoading(false)
     }
   }
 
