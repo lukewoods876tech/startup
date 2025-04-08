@@ -9,6 +9,8 @@ require('dotenv').config();
 require('./db'); // Connect to MongoDB
 const { S3Client, ListBucketsCommand } = require('@aws-sdk/client-s3');
 const { fromEnv } = require('@aws-sdk/credential-providers');
+const { WebSocketServer } = require('ws');
+const WebSocket = require('ws');
 
 const app = express();
 const authRoutes = require('./auth.js');
@@ -334,6 +336,56 @@ validateS3Config().catch(console.error);
 
 // Start server
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+});
+
+// Add this to your existing WebSocket setup in service/index.js
+const wss = new WebSocketServer({ noServer: true });
+const clients = new Set();
+
+// Handle WebSocket connections
+wss.on('connection', (ws) => {
+  clients.add(ws);
+  console.log('WebSocket client connected');
+  
+  ws.on('message', (message) => {
+    try {
+      const data = JSON.parse(message);
+      
+      // Broadcast the message to all connected clients
+      if (data.type === 'chat') {
+        const broadcastMessage = JSON.stringify({
+          type: 'chat',
+          username: data.username,
+          message: data.message,
+          timestamp: data.timestamp
+        });
+        
+        clients.forEach((client) => {
+          if (client.readyState === WebSocket.OPEN) {
+            client.send(broadcastMessage);
+          }
+        });
+      }
+    } catch (error) {
+      console.error('Error processing WebSocket message:', error);
+    }
+  });
+  
+  ws.on('close', () => {
+    clients.delete(ws);
+    console.log('WebSocket client disconnected');
+  });
+});
+
+// Upgrade HTTP server to handle WebSocket connections
+server.on('upgrade', (request, socket, head) => {
+  if (request.url === '/ws') {
+    wss.handleUpgrade(request, socket, head, (ws) => {
+      wss.emit('connection', ws, request);
+    });
+  } else {
+    socket.destroy();
+  }
 }); 
