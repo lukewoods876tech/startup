@@ -225,3 +225,76 @@ function Animals() {
   )
 }
 ```
+
+## Database Deliverable - What I Learned
+
+### MongoDB Integration
+
+- **Mongoose Schema Design**: I learned how to create proper schemas with Mongoose that define the structure of my data. Creating the `Animal` and `User` schemas helped me understand how to enforce data consistency.
+
+- **MongoDB Atlas Setup**: Setting up a cloud MongoDB instance taught me about database configuration, connection strings, and environment variables for secure credential storage.
+
+- **Data Relationships**: I implemented relationships between users and their animals, learning how MongoDB handles document references differently than SQL databases.
+
+- **Query Operations**: Learned various MongoDB operations through Mongoose:
+  - `find()` - To retrieve all animals for a user
+  - `findById()` - To get specific animals
+  - `findByIdAndUpdate()` - For updating animal weights when feeding
+  - `findByIdAndDelete()` - For removing animals from the zoo
+  - `save()` - For creating new documents
+
+### Authentication System
+
+- **JWT Implementation**: Learned how to create, sign, and verify JSON Web Tokens for stateless authentication.
+
+- **Password Security**: Implemented bcrypt for secure password hashing, understanding the importance of salt rounds and why we never store plain text passwords.
+
+- **Protected Routes**: Created middleware for protecting routes on both frontend and backend:
+  - Backend: Express middleware that verifies JWT tokens
+  - Frontend: React component that redirects unauthenticated users
+
+- **LocalStorage**: Used localStorage to persist authentication state between page refreshes, but learned about its security limitations.
+
+### React Context for Auth State
+
+- **Context API**: Implemented a global authentication context that provides login state to all components without prop drilling.
+
+- **useContext Hook**: Used React's useContext hook to access authentication state from any component.
+
+- **State Management**: Learned how to manage complex application state across multiple contexts (Auth, Zoo, Notifications).
+
+### Error Handling
+
+- **Consistent Error Responses**: Created a standardized approach to error handling across the application.
+
+- **Client-Side Validation**: Implemented form validation before sending data to the server.
+
+- **Server-Side Validation**: Added validation on the server to ensure data integrity even if client validation is bypassed.
+
+### Performance Considerations
+
+- **Image Handling**: Learned that image uploads can significantly impact performance and require special handling.
+
+- **Database Indexing**: Created indexes on frequently queried fields to improve performance.
+
+- **Pagination**: Considered implementing pagination for large collections of animals (though not needed yet).
+
+### Security Best Practices
+
+- **Environment Variables**: Used .env files to store sensitive information like database connection strings and JWT secrets.
+
+- **Input Sanitization**: Implemented proper validation to prevent injection attacks.
+
+- **CORS Configuration**: Set up proper CORS policies to control which domains can access the API.
+
+- **Token Expiration**: Added expiration times to JWTs to limit the window of opportunity for token theft.
+
+### Challenges Overcome
+
+- **Asynchronous Operations**: Managing multiple async operations and ensuring proper error handling was challenging.
+
+- **State Synchronization**: Keeping the UI in sync with database changes required careful state management.
+
+- **Authentication Flow**: Creating a smooth authentication flow with proper redirects and protected routes took several iterations to get right.
+
+- **Image Upload**: Handling image uploads with FormData and storing/retrieving them efficiently was more complex than expected.
