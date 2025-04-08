@@ -334,58 +334,66 @@ async function validateS3Config() {
 // Call this before starting your server
 validateS3Config().catch(console.error);
 
-// Start server
-const PORT = process.env.PORT || 4000;
-const server = app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// After your Express app setup, add this WebSocket server code
+const server = require('http').createServer(app);
+const wss = new WebSocketServer({ server });
 
-// Add this to your existing WebSocket setup in service/index.js
-const wss = new WebSocketServer({ noServer: true });
+// Store connected clients
 const clients = new Set();
 
-// Handle WebSocket connections
+// WebSocket connection handler
 wss.on('connection', (ws) => {
+  console.log('New WebSocket connection established');
   clients.add(ws);
-  console.log('WebSocket client connected');
   
-  ws.on('message', (message) => {
+  // Send welcome message to the new client
+  ws.send(JSON.stringify({
+    type: 'system',
+    message: 'Welcome to the Zoo Chat!'
+  }));
+  
+  // Broadcast to all clients that someone joined
+  broadcastMessage({
+    type: 'system',
+    message: 'A new zookeeper has joined the chat!'
+  });
+  
+  // Handle incoming messages
+  ws.on('message', (data) => {
     try {
-      const data = JSON.parse(message);
-      
-      // Broadcast the message to all connected clients
-      if (data.type === 'chat') {
-        const broadcastMessage = JSON.stringify({
-          type: 'chat',
-          username: data.username,
-          message: data.message,
-          timestamp: data.timestamp
-        });
-        
-        clients.forEach((client) => {
-          if (client.readyState === WebSocket.OPEN) {
-            client.send(broadcastMessage);
-          }
-        });
-      }
+      const message = JSON.parse(data);
+      // Add timestamp to the message
+      message.timestamp = new Date().toISOString();
+      // Broadcast the message to all clients
+      broadcastMessage(message);
     } catch (error) {
-      console.error('Error processing WebSocket message:', error);
+      console.error('Error parsing message:', error);
     }
   });
   
+  // Handle disconnection
   ws.on('close', () => {
+    console.log('WebSocket connection closed');
     clients.delete(ws);
-    console.log('WebSocket client disconnected');
+    broadcastMessage({
+      type: 'system',
+      message: 'A zookeeper has left the chat'
+    });
   });
 });
 
-// Upgrade HTTP server to handle WebSocket connections
-server.on('upgrade', (request, socket, head) => {
-  if (request.url === '/ws') {
-    wss.handleUpgrade(request, socket, head, (ws) => {
-      wss.emit('connection', ws, request);
-    });
-  } else {
-    socket.destroy();
-  }
+// Function to broadcast messages to all connected clients
+function broadcastMessage(message) {
+  const messageStr = JSON.stringify(message);
+  clients.forEach(client => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(messageStr);
+    }
+  });
+}
+
+// Update your server startup code
+const PORT = process.env.PORT || 4000;
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 }); 

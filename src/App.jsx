@@ -6,7 +6,7 @@ import Manage from './manage/Manage'
 import Animals from './animals/Animals'
 import About from './about/About'
 import Auth from './auth/Auth'
-import Chat from './components/Chat'
+import Chat from './chat/Chat'
 import { ZooProvider } from './context/ZooContext'
 import { NotificationProvider } from './context/NotificationContext'
 import { AuthProvider } from './context/AuthContext'
@@ -18,8 +18,8 @@ import Register from './register/Register'
 function App() {
   return (
     <AuthProvider>
-      <WebSocketProvider>
-        <ZooProvider>
+      <ZooProvider>
+        <WebSocketProvider>
           <NotificationProvider>
             <Navigation />
             <Routes>
@@ -42,15 +42,22 @@ function App() {
                   </ProtectedRoute>
                 } 
               />
+              <Route 
+                path="/chat" 
+                element={
+                  <ProtectedRoute>
+                    <Chat />
+                  </ProtectedRoute>
+                } 
+              />
               <Route path="/login" element={<Navigate to="/auth" replace />} />
               <Route path="/register" element={<Navigate to="/auth" replace />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
-            <Chat />
             <Footer />
           </NotificationProvider>
-        </ZooProvider>
-      </WebSocketProvider>
+        </WebSocketProvider>
+      </ZooProvider>
     </AuthProvider>
   )
 }

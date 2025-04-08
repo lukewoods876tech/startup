@@ -21,6 +21,7 @@ function Navigation() {
               <li><Link to="/manage">Manage Zoo</Link></li>
               <li><Link to="/animals">View Animals</Link></li>
               <li><Link to="/about">About</Link></li>
+              <li><Link to="/chat">Chat</Link></li>
               <li><button onClick={logout}>Logout</button></li>
             </>
           ) : (

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useAuth } from './AuthContext';
 
 const WebSocketContext = createContext();
@@ -8,50 +8,65 @@ export function WebSocketProvider({ children }) {
   const [messages, setMessages] = useState([]);
   const [connected, setConnected] = useState(false);
   const { user } = useAuth();
-
+  
+  // Initialize WebSocket connection
   useEffect(() => {
     // Only connect if user is logged in
-    if (user) {
-      const ws = new WebSocket(`${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}/ws`);
-      
-      ws.onopen = () => {
-        console.log('WebSocket connected');
-        setConnected(true);
-      };
-      
-      ws.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        if (data.type === 'chat') {
-          setMessages(prev => [...prev, data]);
-        }
-      };
-      
-      ws.onclose = () => {
-        console.log('WebSocket disconnected');
-        setConnected(false);
-      };
-      
-      setSocket(ws);
-      
-      return () => {
+    if (!user) return;
+    
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = `${protocol}//${window.location.host}/ws`;
+    
+    const ws = new WebSocket(wsUrl);
+    
+    ws.onopen = () => {
+      console.log('WebSocket connection established');
+      setConnected(true);
+    };
+    
+    ws.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      setMessages(prev => [...prev, message]);
+    };
+    
+    ws.onclose = () => {
+      console.log('WebSocket connection closed');
+      setConnected(false);
+    };
+    
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+      setConnected(false);
+    };
+    
+    setSocket(ws);
+    
+    // Clean up on unmount
+    return () => {
+      if (ws.readyState === WebSocket.OPEN) {
         ws.close();
-      };
-    }
+      }
+    };
   }, [user]);
-
-  const sendMessage = (message) => {
-    if (socket && socket.readyState === WebSocket.OPEN && user) {
+  
+  // Send message function
+  const sendMessage = useCallback((message) => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
       socket.send(JSON.stringify({
         type: 'chat',
-        username: user.username,
-        message,
-        timestamp: new Date().toISOString()
+        username: user?.username || 'Anonymous',
+        message
       }));
     }
-  };
-
+  }, [socket, user]);
+  
+  // Clear messages function
+  const clearMessages = useCallback(() => {
+    setMessages([]);
+  }, []);
+  
   return (
-    <WebSocketContext.Provider value={{ messages, sendMessage, connected }}>
+    <WebSocketContext.Provider value={{ messages, sendMessage, clearMessages, connected }}>
       {children}
     </WebSocketContext.Provider>
   );
