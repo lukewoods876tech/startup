@@ -298,3 +298,36 @@ function Animals() {
 - **Authentication Flow**: Creating a smooth authentication flow with proper redirects and protected routes took several iterations to get right.
 
 - **Image Upload**: Handling image uploads with FormData and storing/retrieving them efficiently was more complex than expected.
+
+### WebSocket Implementation
+
+- **WebSocket Protocol**: Learned how WebSockets provide a persistent connection between client and server, enabling real-time bidirectional communication without the overhead of HTTP requests.
+
+- **Connection Management**: Implemented proper connection lifecycle handling including:
+  - Establishing connections based on authentication state
+  - Handling connection errors gracefully
+  - Properly closing connections when components unmount
+  - Managing a set of connected clients on the server
+
+- **Message Broadcasting**: Created a system to broadcast messages to all connected clients, ensuring real-time updates for all users.
+
+- **React Context for WebSockets**: Built a dedicated context provider that:
+  - Manages WebSocket connection state
+  - Stores message history
+  - Provides connection status to components
+  - Handles message sending with proper user attribution
+
+- **Real-time UI Updates**: Implemented auto-scrolling message containers and immediate UI updates when new messages arrive.
+
+- **User Experience Considerations**: Added visual cues for different message types (system messages, user's own messages, and other users' messages) to improve readability and user experience.
+
+- **Security Aspects**: Tied WebSocket connections to authentication state, ensuring only authenticated users can participate in the chat.
+
+- **Error Handling**: Implemented robust error handling for WebSocket connections, including reconnection strategies and user feedback when connections fail.
+
+- **Performance Optimization**: Learned to efficiently manage WebSocket resources by:
+  - Only establishing connections when needed
+  - Properly cleaning up connections to prevent memory leaks
+  - Using React's useCallback for message sending functions
+
+- **Deployment Considerations**: Discovered the importance of proper proxy configuration for WebSockets when deploying to production environments.
