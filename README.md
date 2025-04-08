@@ -153,13 +153,26 @@ For this deliverable, I did the following. I checked the box `[x]` and added a d
 
 ## 🚀 DB/Login deliverable
 
-For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
+For this deliverable I implemented user authentication and MongoDB integration:
 
-- [x] **User registration** - Created a registration form with validation. Implemented backend endpoint for user creation in MongoDB with secure password hashing via bcrypt.
-- [x] **User login and logout** - Built login functionality with JWT token authentication. Added persistent login state using localStorage and created a logout function that clears credentials.
-- [x] **Stores data in MongoDB** - Connected to MongoDB using Mongoose. Created schemas for Users and Zoo data.
-- [x] **Stores credentials in MongoDB** - Implemented secure storage of user credentials in MongoDB with encrypted passwords.
-- [x] **Restricts functionality based on authentication** - Added protected routes that require authentication. Zoo management and animal viewing are now restricted to logged-in users only.
+- [x] **User registration** - Created a registration form with validation in `src/auth/Auth.jsx` that allows users to create accounts. The backend endpoint in `service/auth.js` handles user creation in MongoDB with secure password hashing via bcrypt.
+
+- [x] **User login and logout** - Built login functionality with JWT token authentication. The login form in `src/auth/Auth.jsx` authenticates users against the database. Authentication state is maintained using localStorage and a custom `AuthContext` that provides login state across the application. Logout functionality clears credentials from storage.
+
+- [x] **Stores data in MongoDB** - Connected to MongoDB using Mongoose. Created schemas for Users (`service/User.js`) and Zoo animals (`service/Animal.js`). All animal data is now persistently stored in MongoDB collections.
+
+- [x] **Stores credentials in MongoDB** - User credentials are securely stored in MongoDB with passwords encrypted using bcrypt. The User schema in `service/User.js` includes a pre-save hook that automatically hashes passwords before storing them.
+
+- [x] **Restricts functionality based on authentication** - Added protected routes in `src/components/ProtectedRoute.jsx` that require authentication. Zoo management (`/manage`) and animal viewing (`/animals`) are now restricted to logged-in users only. The authentication is enforced both on the frontend and backend using JWT verification middleware.
+
+### Technical Implementation Details
+
+- Used Mongoose for MongoDB object modeling
+- Implemented JWT for stateless authentication
+- Created middleware for route protection on the backend
+- Built a context-based authentication system on the frontend
+- Added proper error handling for authentication failures
+- Implemented secure password storage with bcrypt hashing
 
 ## 🚀 WebSocket deliverable
 
