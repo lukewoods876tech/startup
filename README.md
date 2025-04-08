@@ -176,10 +176,31 @@ For this deliverable I implemented user authentication and MongoDB integration:
 
 ## 🚀 WebSocket deliverable
 
-For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
+For this deliverable I implemented real-time communication features:
 
-- [x] **Backend listens for WebSocket connection** - Created a WebSocket server in `service/index.js` that listens for connections from the frontend.
-- [x] **Frontend makes WebSocket connection** - Implemented a WebSocket client in `src/context/WebSocketContext.jsx` that connects to the server.
-- [x] **Data sent over WebSocket connection** - Set up real-time animal activity notifications using WebSockets. When a user adds or removes an animal, this information is broadcast to all connected clients.
-- [x] **WebSocket data displayed** - Added a notification component that displays real-time updates about animal additions and removals from other users.
-- [x] **Application is fully functional** - The application now includes all required features: MongoDB storage, user authentication, and real-time WebSocket notifications.
+- [x] **Backend listens for WebSocket connection** - Created a WebSocket server in `service/index.js` that listens for connections from the frontend. The server maintains a set of connected clients and handles message broadcasting.
+
+- [x] **Frontend makes WebSocket connection** - Implemented a WebSocket client in `src/context/WebSocketContext.jsx` that connects to the server when a user is logged in. The context provides connection status, message history, and message sending capabilities to components.
+
+- [x] **Data sent over WebSocket connection** - Set up a real-time chat system where users can send and receive messages instantly. Messages include user identification, timestamps, and message content.
+
+- [x] **WebSocket data displayed** - Created a dedicated Chat component (`src/chat/Chat.jsx`) with:
+  - Real-time message display with different styling for system messages, user's own messages, and other users' messages
+  - Connection status indicator
+  - Message input form with validation
+  - Auto-scrolling to the newest messages
+  - Timestamps and username display for each message
+
+- [x] **Application is fully functional** - The chat system is fully integrated with the existing authentication system:
+  - Only logged-in users can access the chat
+  - Messages are associated with the sender's username
+  - The chat link appears in the navigation bar for authenticated users
+  - The WebSocket connection is properly established and closed based on authentication state
+
+### Technical Implementation Details
+
+- Used the `ws` library for WebSocket server implementation
+- Created a custom React context for WebSocket state management
+- Implemented proper connection lifecycle handling (connect, disconnect, error handling)
+- Added real-time notifications for user join/leave events
+- Styled the chat interface for a user-friendly experience with clear message attribution
